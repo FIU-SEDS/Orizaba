@@ -2,6 +2,8 @@
 
 SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 
+**Microcontroller**: Teensy 4.1
+
 ### Sensor Libraries Directory:
 
 #### BNO055 Main IMU
