@@ -4,29 +4,51 @@ SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 
 **Microcontroller**: Teensy 4.1
 
-### Sensor Libraries Directory:
-
+### Sensors:
 #### BNO055 Main IMU
-
----
-
+- [Github Library](https://github.com/adafruit/Adafruit_BNO055)
+- [Datasheet](https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor/downloads)
 #### ASM330LHH Backup IMU
-
-- [ASM330 Main IMU](https://github.com/stm32duino/ASM330LHH/tree/main)
-- [Main IMU (ASM330) Datasheet](https://www.st.com/resource/en/datasheet/asm330lhh.pdf)
-- [ASM330 Wiring Diagram](https://github.com/user-attachments/assets/08a4da38-90d2-46dd-91a4-b4015cfabe34)
-
+- [Github Library](https://github.com/stm32duino/ASM330LHH/tree/main)
+- [Datasheet](https://www.st.com/resource/en/datasheet/asm330lhh.pdf)
+- [Wiring Diagram](https://github.com/user-attachments/assets/08a4da38-90d2-46dd-91a4-b4015cfabe34)
+#### MS561101BA03-50 Barometer
+- [Github Library](https://github.com/RobTillaart/MS5611)
+- [Datasheet](https://www.digikey.com/en/products/detail/te-connectivity-measurement-specialties/MS561101BA03-50/5277445)
+#### MAX-M8C-0 GPS
+- [Github Library](https://github.com/u-blox/ubxlib) **PENDING**
+- [Datasheet](https://www.digikey.co.nz/en/products/detail/u-blox/MAX-M8C-0/6150635)
+#### MMC5983MA Magnetometer
+- [Datasheet]()**PENDING**
+- [Github Library](https://github.com/sparkfun/SparkFun_MMC5983MA_Magnetometer_Arduino_Library)
+#### HTU20DF Temperature & Humidity Sensor
+- [Datasheet]()**PENDING**
+- [Github Library](https://github.com/adafruit/Adafruit_HTU21DF_Library?tab=readme-ov-file)
+#### MCP7940M-I/SN Real-time Clock
+- [Datasheet]()**PENDING**
+- [Github Library](https://github.com/Zanduino/MCP7940/tree/master)
 ---
 
-#### SST26VF080AT-104I/SN Flash IC Memory
+### Radios:
+#### Reyax 868/915 MHz LoRa RYLR998 module
+- [Website](https://reyax.com//products/RYLR998)
+- [AT Command Manual](https://reyax.com//upload/products_download/download_file/LoRa_AT_Command_RYLR998_RYLR498_EN.pdf)
+- [Datasheet](https://reyax.com//upload/products_download/download_file/RYLR998_EN.pdf)
+#### Reyax RYLR 689 LoRa module
+- [Website](https://reyax.com//products/RYLR689)
+- [Datasheet](https://reyax.com//upload/products_download/download_file/RYLR689.pdf)
+---
 
+### Storage: 
+#### SST26VF080AT-104I/SN Flash IC Memory
 - [Github Library](https://github.com/Marzogh/SPIMemory)
+#### SD Card Module
+- Standard Arduino SPI SD card library
+---
 
 ### Sensor I2C Addresses:
-
 - ASM330: `0x6A`
 - Magnetometer: `0x30`
-
 ---
 
 ### LESSONS learned from VINSON FLIGHT COMPUTER SUBSCALE:
@@ -41,8 +63,6 @@ SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 - **Archive Storage:** If files are not intended for compilation, place them in the `archive` folder since only the `src` folder is compiled.
 - **Test Folder Usage:** Unless you are actively testing, **do not** place any files in the `test` folder as it may cause errors.
 - **Include Folder:** Any custom header files should be placed in the `include` folder, which is recognized by PlatformIO as the location for header files.
-- **Corresponding File (.cpp) for Custom Header Files** for the `.cpp` file that corresponds to the header file in the `include` folder make sure that it is placed in the `src` folder so that platformIO can recognize it.
-
 ---
 
 # Commenting Standards
