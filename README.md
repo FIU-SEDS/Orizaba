@@ -3,8 +3,8 @@
 SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 
 **Microcontroller**: Teensy 4.1
-
-### Sensors:
+--- 
+## Sensors:
 #### BNO055 Main IMU
 - [Github Library](https://github.com/adafruit/Adafruit_BNO055)
 - [Datasheet](https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor/downloads)
@@ -29,7 +29,7 @@ SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 - [Github Library](https://github.com/Zanduino/MCP7940/tree/master)
 ---
 
-### Radios:
+## Radios:
 #### Reyax 868/915 MHz LoRa RYLR998 module
 - [Website](https://reyax.com//products/RYLR998)
 - [AT Command Manual](https://reyax.com//upload/products_download/download_file/LoRa_AT_Command_RYLR998_RYLR498_EN.pdf)
@@ -39,7 +39,7 @@ SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 - [Datasheet](https://reyax.com//upload/products_download/download_file/RYLR689.pdf)
 ---
 
-### Storage: 
+## Storage: 
 #### SST26VF080AT-104I/SN Flash IC Memory
 - [Github Library](https://github.com/Marzogh/SPIMemory)
 #### SD Card Module
