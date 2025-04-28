@@ -2,9 +2,11 @@ The structure of the src directory is as follows:
 **DISCLAIMER**: Header files are stored in the include directory
 
 |--src
-| |--main.cpp
+| |-- main.cpp
+| |-- state_manager.cpp
 | |
-| |--Sensor
+| |
+| |--sensors
 | | |- gps.cpp
 | | |- backup_imu.cpp
 | | |- main_imu.cpp
@@ -12,7 +14,6 @@ The structure of the src directory is as follows:
 | | |- temphumidty.cpp
 | | |- magnetometer.cpp
 | | |- real_time_clock.cpp
-| | |- state_manager.cpp
 | |  
 | |  
 | |--IO (input/output)

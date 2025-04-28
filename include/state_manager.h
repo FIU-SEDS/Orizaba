@@ -1,25 +1,21 @@
 #pragma once
 #ifndef STATE_MANAGER_H
 #define STATE_MANAGER_H
-#include <cstdint>
-
-constexpr uint8_t BACKUP_IMU_ADDRESS = 0x6A;
-constexpr uint8_t MAIN_IMU_ADDRESS = 0x30;
-constexpr uint8_t SD_CARD_MODULE_CS_PIN = 10;
+#include <common_sensors.h>
 
 enum critical_sensors
 {
-  BAROMETER,
-  MAIN_IMU,
-  BACKUP_IMU,
-  GPS
+  BAROMETER,  // measures pressure and altitude
+  MAIN_IMU,   // 9-axis Main IMU
+  BACKUP_IMU, // 6-axis Backup IMU
+  GPS         // GNSS GPS module
 };
 
 enum non_critical_sensors
 {
-  MAGNETOMETER,
-  TEMPHUD, // temperature & humidity sensor
-  RTC      // real time clock
+  MAGNETOMETER, // measures magnetic field
+  TEMPHUD,      // temperature & humidity sensor
+  RTC           // real time clock
 };
 
 enum Axes
