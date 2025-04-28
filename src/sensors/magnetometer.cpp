@@ -3,7 +3,16 @@
 
 SFE_MMC5983MA magnetometer; // object
 
-bool power_magnetometer()
+bool verify_magnetometer_temperature(int16_t mag_temp_reading)
+{
+  if (mag_temp_reading < MAGNETOMETER_LOWER_TEMP || mag_temp_reading > MAGNETOMETER_UPPER_TEMP)
+  {
+    return false;
+  }
+  return true;
+}
+
+bool power_on_magnetometer()
 {
   if (magnetometer.begin() == false)
   {
