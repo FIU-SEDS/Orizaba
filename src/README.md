@@ -14,7 +14,7 @@ The structure of the src directory is as follows:
 | | |- temphumidty.cpp
 | | |- magnetometer.cpp
 | | |- real_time_clock.cpp
-| |  
+| | |- common_sensors.cpp
 | |  
 | |--IO (input/output)
 | | |- storage.cpp

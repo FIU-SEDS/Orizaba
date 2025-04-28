@@ -20,7 +20,7 @@ constexpr uint8_t MAGNETOMETER_UPPER_TEMP = 105;
 bool is_device_connected(uint8_t address);
 
 // Function that initilizes magnetometer and checks temperature and I2C address
-bool power_magnetometer();
+bool power_on_magnetometer();
 
 // Verifies that the magnetometer internal temperature is between -40 and 105 degress Celsius
 bool verify_magnetometer_temperature(int16_t mag_temp_reading);

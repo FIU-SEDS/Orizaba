@@ -2,8 +2,11 @@
 #ifndef STATE_MANAGER_H
 #define STATE_MANAGER_H
 
+// bool critical_sensors[4];
+// bool non_critical_sensors[3];
+
 // Enums for critical and non-critical sensors
-enum critical_sensors
+enum critical_sensors_index
 {
   BAROMETER,
   MAIN_IMU,
@@ -11,7 +14,7 @@ enum critical_sensors
   GPS
 };
 
-enum non_critical_sensors
+enum non_critical_sensors_index
 {
   MAGNETOMETER,
   TEMPHUD, // temperature & humidity sensor
@@ -39,6 +42,7 @@ enum flight_state
   LANDED
 };
 
-// State manager class
+// State manager functions
+bool initialize_all_sensors();
 
 #endif
