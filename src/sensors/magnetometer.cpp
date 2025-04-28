@@ -1,6 +1,8 @@
 #include <Wire.h> // Arduino I2C library
 #include <common_sensors.h>
 
+SFE_MMC5983MA magnetometer; // object
+
 bool power_magnetometer()
 {
   if (magnetometer.begin() == false)
@@ -17,7 +19,7 @@ bool power_magnetometer()
     return false;
   }
 
-  if (!verify_magnetometer_temperature())
+  if (!verify_magnetometer_temperature(magnetometer.getTemperature()))
   {
     Serial.println("Magentometer Temperature check failed.");
     return false;

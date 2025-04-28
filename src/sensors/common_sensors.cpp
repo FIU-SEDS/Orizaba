@@ -7,10 +7,9 @@ bool isDeviceConnected(uint8_t address)
   return (Wire.endTransmission() == 0); // Returns true if device responds
 }
 
-bool verify_magnetometer_temperature()
+bool verify_magnetometer_temperature(int16_t mag_temp_reading)
 {
-  int mag_temp = magnetometer.getTemperature(); // variable that stores the magnetometers die temperature (CELSIUS)
-  if (mag_temp < MAGNETOMETER_LOWER_TEMP || mag_temp > MAGNETOMETER_UPPER_TEMP)
+  if (mag_temp_reading < MAGNETOMETER_LOWER_TEMP || mag_temp_reading > MAGNETOMETER_UPPER_TEMP)
   {
     return false;
   }

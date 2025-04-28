@@ -1,21 +1,21 @@
 #pragma once
 #ifndef STATE_MANAGER_H
 #define STATE_MANAGER_H
-#include <common_sensors.h>
 
+// Enums for critical and non-critical sensors
 enum critical_sensors
 {
-  BAROMETER,  // measures pressure and altitude
-  MAIN_IMU,   // 9-axis Main IMU
-  BACKUP_IMU, // 6-axis Backup IMU
-  GPS         // GNSS GPS module
+  BAROMETER,
+  MAIN_IMU,
+  BACKUP_IMU,
+  GPS
 };
 
 enum non_critical_sensors
 {
-  MAGNETOMETER, // measures magnetic field
-  TEMPHUD,      // temperature & humidity sensor
-  RTC           // real time clock
+  MAGNETOMETER,
+  TEMPHUD, // temperature & humidity sensor
+  RTC      // real time clock
 };
 
 enum Axes
@@ -24,5 +24,21 @@ enum Axes
   Y,
   Z
 };
+
+// Flight states
+enum flight_state
+{
+  IDLE,
+  INIT,
+  BOOST,
+  BURNOUT,
+  COAST,
+  APOGEE,
+  DESCENT_DROGUE,
+  DESCENT_MAIN,
+  LANDED
+};
+
+// State manager class
 
 #endif
