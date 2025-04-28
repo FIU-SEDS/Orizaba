@@ -1,9 +1,11 @@
-#pragma once
 #ifndef COMMON_SENSORS_H
 #define COMMON_SENSORS_H
 #include <cstdint>
 
+#include <Wire.h>
 #include <SparkFun_MMC5983MA_Arduino_Library.h> // Magnetometer Sensor library
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
 
 // Pin address and locations
 constexpr uint8_t BACKUP_IMU_ADDRESS = 0x6A;   // I2C address for ASM330 Backup IMU
@@ -22,7 +24,6 @@ bool is_device_connected(uint8_t address);
 // Function that initilizes magnetometer and checks temperature and I2C address
 bool power_on_magnetometer();
 
-// Verifies that the magnetometer internal temperature is between -40 and 105 degress Celsius
-bool verify_magnetometer_temperature(int16_t mag_temp_reading);
+bool proceess_magnetometer();
 
 #endif

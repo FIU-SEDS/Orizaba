@@ -2,9 +2,6 @@
 #ifndef STATE_MANAGER_H
 #define STATE_MANAGER_H
 
-// bool critical_sensors[4];
-// bool non_critical_sensors[3];
-
 // Enums for critical and non-critical sensors
 enum critical_sensors_index
 {
@@ -31,8 +28,8 @@ enum Axes
 // Flight states
 enum flight_state
 {
-  IDLE,
   INIT,
+  IDLE,
   BOOST,
   BURNOUT,
   COAST,
