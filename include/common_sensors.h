@@ -10,6 +10,7 @@
 #include <Adafruit_HTU21DF.h>                   // Temperature and Humidity Sensor Library
 #include <ASM330LHHSensor.h>                    // Backup IMU Library
 #include <MS5611.h>                             // Barometer Library
+#include <MCP7940.h>                            // Real Time Clock Library
 
 // Pin address and locations
 constexpr uint8_t BACKUP_IMU_ADDRESS = 0x6A;     // I2C address for ASM330 Backup IMU

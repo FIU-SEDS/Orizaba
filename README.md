@@ -41,7 +41,7 @@ SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 
 #### MCP7940M-I/SN Real-time Clock
 
-- [Datasheet]()**PENDING**
+- [Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/20002292B.pdf)
 - [Github Library](https://github.com/Zanduino/MCP7940/tree/master)
 
 ---
