@@ -75,6 +75,7 @@ SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 
 ### Sensor I2C Addresses:
 
+- Main IMU (BNO055): `0x28`
 - Backup IMU (ASM330): `0x6A`
 - Magnetometer: `0x30`
 - Temperature & Humidity Sensor (HTU20D): `0x40`
