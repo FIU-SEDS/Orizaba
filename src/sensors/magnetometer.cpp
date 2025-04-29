@@ -5,7 +5,7 @@ SFE_MMC5983MA magnetometer; // object
 // Verifies that the magnetometer internal temperature is between -40 and 105 degress Celsius
 bool verify_magnetometer_temperature(int16_t mag_temp_reading)
 {
-  if (mag_temp_reading < MAGNETOMETER_LOWER_TEMP || mag_temp_reading > MAGNETOMETER_UPPER_TEMP)
+  if (mag_temp_reading < COMMON_LOWER_TEMP || mag_temp_reading > MAGNETOMETER_UPPER_TEMP)
   {
     return false;
   }
@@ -35,8 +35,4 @@ bool power_on_magnetometer()
   }
 
   return true; // once everything is checked and is ok then return true.
-}
-
-bool proccess_magnetometer()
-{
 }

@@ -3,7 +3,7 @@
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(BAUD_RATE);
   Wire.begin();
 }
 
