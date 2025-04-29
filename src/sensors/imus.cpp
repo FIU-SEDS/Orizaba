@@ -11,13 +11,47 @@
 #endif
 #define SerialPort Serial
 
-// components
-
+// Sensor objects
+Adafruit_BNO055 main_IMU = Adafruit_BNO055(55, 0x28);
 ASM330LHHSensor backup_IMU(&DEV_I2C, ASM330LHH_I2C_ADD_L);
+
+bool verify_main_IMU_temperature(int8_t main_IMU_temp_reading)
+{
+    if (main_IMU_temp_reading < COMMON_LOWER_TEMP || main_IMU_temp_reading > MAGNETOMETER_UPPER_TEMP)
+    {
+        return false;
+    }
+    return true;
+}
+
+bool power_on_main_IMU()
+{
+    if (main_IMU.begin() == ASM330LHH_ERROR)
+    {
+        Serial.println("Main IMU Begin function failed");
+        return false;
+    }
+
+    main_IMU.setExtCrystalUse(true); // external crystal provies more reliable and percise measurements
+
+    if (!is_device_connected(MAIN_IMU_ADDRESS))
+    {
+        Serial.println("Main IMU I2C check failed.");
+        return false;
+    }
+
+    if (!verify_main_IMU_temperature(main_IMU.getTemp()))
+    {
+        Serial.println("Main IMU temperature check failed.");
+        return false;
+    }
+
+    return true;
+}
 
 bool power_on_backup_IMU()
 {
-    if (backup_IMU.begin() != ASM330LHH_OK)
+    if (backup_IMU.begin() == ASM330LHH_ERROR)
     {
         Serial.println("Backup IMU BEGIN function failed.");
         return false;
