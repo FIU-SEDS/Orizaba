@@ -16,7 +16,7 @@ bool power_on_magnetometer()
 {
   if (magnetometer.begin() == false)
   {
-    Serial.print("Magnetometer Begin function failed."); // print this
+    Serial.print("Magnetometer BEGIN function failed."); // print this
     return false;
   }
 
@@ -39,5 +39,4 @@ bool power_on_magnetometer()
 
 bool proccess_magnetometer()
 {
-  
 }

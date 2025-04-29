@@ -6,11 +6,13 @@
 #include <SparkFun_MMC5983MA_Arduino_Library.h> // Magnetometer Sensor library
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
+#include <Adafruit_HTU21DF.h>
 
 // Pin address and locations
 constexpr uint8_t BACKUP_IMU_ADDRESS = 0x6A;   // I2C address for ASM330 Backup IMU
 constexpr uint8_t MAIN_IMU_ADDRESS = 0x30;     // I2C address for BNO055 Main IMU
 constexpr uint8_t MAGNETOMETER_ADDRESS = 0x30; // I2C address for magnetometer
+constexpr uint8_t TEMP_AND_HUMID_ADDRESS = 0x40;
 constexpr uint8_t SD_CARD_MODULE_CS_PIN = 10;
 constexpr uint32_t BAUD_RATE = 115200; // Serial communication speed
 
@@ -25,5 +27,9 @@ bool is_device_connected(uint8_t address);
 bool power_on_magnetometer();
 
 bool proceess_magnetometer();
+
+bool power_on_barometer();
+
+bool power_on_temp_and_humid();
 
 #endif

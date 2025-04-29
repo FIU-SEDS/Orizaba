@@ -25,6 +25,6 @@ void setup() {
     AccGyr.Enable_X();
     AccGyr.Enable_G();
 
-    //add Wire library and Sensor library #include 
+    // add Wire library and Sensor library #include 
     
 }
