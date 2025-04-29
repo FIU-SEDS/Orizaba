@@ -4,7 +4,7 @@ MS5611 barometer;
 
 bool verify_barometer_temperature(float barometer_temp_reading)
 {
-  if (barometer_temp_reading < COMMON_LOWER_TEMP || barometer_temp_reading > BAROMETER_UPPER_TEMP)
+  if (barometer_temp_reading < COMMON_LOWER_TEMP || barometer_temp_reading > COMMON_UPPER_TEMP)
   {
     return false;
   }
