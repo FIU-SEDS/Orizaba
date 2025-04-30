@@ -18,6 +18,7 @@ constexpr uint8_t MAIN_IMU_ADDRESS = 0x28;       // I2C address for BNO055 Main 
 constexpr uint8_t MAGNETOMETER_ADDRESS = 0x30;   // I2C address for magnetometer
 constexpr uint8_t TEMP_AND_HUMID_ADDRESS = 0x40; // I2C address for HTU20DF Temperature & Humidity
 constexpr uint8_t BAROMETER_ADDRESS = 0x77;      // I2C address for MS5611 Barometer
+constexpr uint8_t REAL_TIME_CLOCK_ADDRESS = 0x6F;
 constexpr uint8_t SD_CARD_MODULE_CS_PIN = 10;
 constexpr uint32_t BAUD_RATE = 115200; // Serial communication speed
 
@@ -73,5 +74,13 @@ bool power_on_backup_IMU();
  * @return true if initialization and all checks pass, false otherwise
  */
 bool power_on_main_IMU();
+
+/**
+ * @brief Initializes the MCP7940 Real Time Clock and performs startup checks
+ * @details Initilizes sensor, checks the status of the device and ensures that the oscillator is running,
+ *          verifies I2C connection, and sets to current time
+ * @return true if initialization and all checks pass, fail otherwise
+ * */
+bool power_on_real_time_clock();
 
 #endif
