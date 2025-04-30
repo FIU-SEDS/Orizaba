@@ -1,6 +1,6 @@
 #include <common_sensors.h>
 
-MS5611 barometer;
+MS5611 barometer; // Barometer MS5611 object
 
 bool verify_barometer_temperature(float barometer_temp_reading)
 {

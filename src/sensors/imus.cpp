@@ -12,8 +12,8 @@
 #define SerialPort Serial
 
 // Sensor objects
-Adafruit_BNO055 main_IMU = Adafruit_BNO055(55, 0x28);
-ASM330LHHSensor backup_IMU(&DEV_I2C, ASM330LHH_I2C_ADD_L);
+Adafruit_BNO055 main_IMU = Adafruit_BNO055(55, 0x28);      // main IMU BNO055 object
+ASM330LHHSensor backup_IMU(&DEV_I2C, ASM330LHH_I2C_ADD_L); // backup IMU ASM330LHH object
 
 bool verify_main_IMU_temperature(int8_t main_IMU_temp_reading)
 {
@@ -26,7 +26,7 @@ bool verify_main_IMU_temperature(int8_t main_IMU_temp_reading)
 
 bool power_on_main_IMU()
 {
-    if (main_IMU.begin() == ASM330LHH_ERROR)
+    if (main_IMU.begin() == false)
     {
         Serial.println("Main IMU Begin function failed");
         return false;

@@ -1,6 +1,6 @@
 #include <common_sensors.h>
 
-SFE_MMC5983MA magnetometer; // object
+SFE_MMC5983MA magnetometer; // Magnetometer MMC5983MA object
 
 // Verifies that the magnetometer internal temperature is between -40 and 105 degress Celsius
 bool verify_magnetometer_temperature(int16_t mag_temp_reading)
