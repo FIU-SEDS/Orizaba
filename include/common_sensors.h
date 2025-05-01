@@ -19,7 +19,12 @@ constexpr uint8_t MAGNETOMETER_ADDRESS = 0x30;   // I2C address for magnetometer
 constexpr uint8_t TEMP_AND_HUMID_ADDRESS = 0x40; // I2C address for HTU20DF Temperature & Humidity
 constexpr uint8_t BAROMETER_ADDRESS = 0x77;      // I2C address for MS5611 Barometer
 constexpr uint8_t REAL_TIME_CLOCK_ADDRESS = 0x6F;
+
+// I2C pins are memory mapped: we specify a memory address
+// For SPI we need to specify the pin that the component connects to on the controller
 constexpr uint8_t SD_CARD_MODULE_CS_PIN = 10;
+constexpr uint8_t FLASH_CARD_CS_PIN     =  4; // FIGURE OUT
+
 constexpr uint32_t BAUD_RATE = 115200; // Serial communication speed
 
 // Sensor parameters
