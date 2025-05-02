@@ -3,15 +3,6 @@
 #include <cstdint>
 #include <Wire.h>
 
-#include <SparkFun_MMC5983MA_Arduino_Library.h> // Magnetometer Sensor Library
-#include <Adafruit_Sensor.h>                    // Main IMU Library
-#include <Adafruit_BNO055.h>                    // Main IMU Library
-#include <utility/imumaths.h>                   // Main IMU orientation Library
-#include <Adafruit_HTU21DF.h>                   // Temperature and Humidity Sensor Library
-#include <ASM330LHHSensor.h>                    // Backup IMU Library
-#include <MS5611.h>                             // Barometer Library
-#include <MCP7940.h>                            // Real Time Clock Library
-
 // Pin address and locations
 constexpr uint8_t BACKUP_IMU_ADDRESS = 0x6A;     // I2C address for ASM330 Backup IMU
 constexpr uint8_t MAIN_IMU_ADDRESS = 0x28;       // I2C address for BNO055 Main IMU

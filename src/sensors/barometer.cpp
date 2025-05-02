@@ -1,4 +1,5 @@
 #include <common_sensors.h>
+#include <MS5611.h> // Barometer Library
 
 MS5611 barometer; // Barometer MS5611 object
 
@@ -55,5 +56,4 @@ bool power_on_barometer()
 
 bool process_barometer()
 {
-  
 }

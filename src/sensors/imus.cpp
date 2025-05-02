@@ -1,4 +1,8 @@
 #include <common_sensors.h>
+#include <Adafruit_Sensor.h>  // Main IMU Library
+#include <Adafruit_BNO055.h>  // Main IMU Library
+#include <utility/imumaths.h> // Main IMU orientation Library
+#include <ASM330LHHSensor.h>  // Backup IMU Library
 
 #ifdef ARDUINO_SAM_DUE
 #define DEV_I2C Wire1

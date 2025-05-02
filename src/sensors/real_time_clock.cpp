@@ -1,4 +1,5 @@
 #include <common_sensors.h>
+#include <MCP7940.h> // Real Time Clock Library
 
 MCP7940_Class real_time_clock; // RTC object
 

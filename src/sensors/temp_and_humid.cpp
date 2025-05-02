@@ -1,4 +1,5 @@
 #include <common_sensors.h>
+#include <Adafruit_HTU21DF.h> // Temperature and Humidity Sensor Library
 
 Adafruit_HTU21DF temp_hud = Adafruit_HTU21DF();
 
