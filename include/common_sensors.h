@@ -23,7 +23,7 @@ constexpr uint8_t REAL_TIME_CLOCK_ADDRESS = 0x6F;
 // I2C pins are memory mapped: we specify a memory address
 // For SPI we need to specify the pin that the component connects to on the controller
 constexpr uint8_t SD_CARD_MODULE_CS_PIN = 10;
-constexpr uint8_t FLASH_CARD_CS_PIN     =  4; // FIGURE OUT
+constexpr uint8_t FLASH_CARD_CS_PIN = 4; // FIGURE OUT
 
 constexpr uint32_t BAUD_RATE = 115200; // Serial communication speed
 
@@ -87,5 +87,13 @@ bool power_on_main_IMU();
  * @return true if initialization and all checks pass, fail otherwise
  * */
 bool power_on_real_time_clock();
+
+bool power_on_GPS();
+
+bool process_temp_and_humidity();
+bool process_barometer();
+bool process_IMUs();
+bool process_magnetometer();
+bool process_real_time_clock();
 
 #endif
