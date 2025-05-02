@@ -33,6 +33,12 @@ constexpr uint8_t MAGNETOMETER_UPPER_TEMP = 105;  // degress Celsius
 constexpr uint8_t COMMON_UPPER_TEMP = 85;         // degress Celsius (multiple sensors share this higher tempearture operating range)
 constexpr uint8_t TEMP_HUMIDITY_UPPER_TEMP = 125; // degress Celsius
 
+typedef union
+{
+  int Integer; // Integer Numbers
+  float Real;  // Real Numbers
+} sensor_values;
+
 /**
  * @brief Checks if a device at the specified I2C address is responsive
  * @param 8-bit address The I2C address to check
