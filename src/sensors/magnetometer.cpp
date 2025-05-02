@@ -36,3 +36,51 @@ bool power_on_magnetometer()
 
   return true; // once everything is checked and is ok then return true.
 }
+
+double get_heading()//function for direction in degrees 
+{
+    //heading calculated(angle/compass direction)
+    double Degrees = 0; 
+
+    //unsigned 32-bit int to store raw magnetometer readings for X,Y,Z axises.
+    uint32_t rawValueX = 0; //X,Y,Z values 
+    uint32_t rawValueY = 0;//double check if unit32 or uint18!!!
+    uint32_t rawValueZ = 0; 
+    //variables to hold scaled(normalized) versions of X,Y,Z values.
+    double scaledX = 0; 
+    double scaledY = 0;
+    double scaledZ = 0;
+
+    // Read all three channels simultaneously
+    //Calls a function on the magnetometer object to fill in the rawX, Y, Z values.
+    //passes the addresses of rawValueX,Y,Z so the function can update them directly.
+    magnetometer.getMeasurementXYZ(&rawValueX, &rawValueY, &rawValueZ);
+    
+    //Converts the rawX value to double, subtracts 131072.0, divides by 131072.0.
+    //This scales the raw value into a range roughly between -1 and +1.
+    //(Likely the raw range is 0 to 262144, centered(midpoint) at 131072)
+    //range from 0 to 262143 because uint18(literally the definition). magnetic field max neg field is 0 or -1 and max pos field is 262143 or +1
+    //this range includes neg and pos magnetic fields so the true 0 magnetic field is in the midpoint which is 131072.0(AKA 2^17)
+    scaledX = (double)rawValueX - 131072.0; //131072.0 is the midpoint 
+    scaledX /= 131072.0; //divide by midpoint and new scaledX value is given.
+    scaledY = (double)rawValueY - 131072.0;
+    scaledY /= 131072.0;
+    scaledZ = (double)rawValueZ - 131072.0;
+    scaledZ /= 131072.0;
+    
+    // atan2 returns a value between +PI and -PI
+    // Converts to degrees
+    //uses atan2(y,x) to calculate angle in radians from the x and y magnetometer axes. 
+    //0 - scaledY reverses the Y-axis (likely due to coordinate system adjustment).
+    //atan2 gives the angle between the vector (X, Y) and the positive X-axis.
+    Degrees = atan2(scaledX, 0 - scaledY);
+
+    // atan2 returns a value between +PI and -PI
+    //convert from radians to a range from -1 to +1
+    Degrees /= PI; 
+    Degrees *= 180; //convert to degrees 
+    Degrees += 180; //shift to range [0,360]
+    //now suitable as compass direction
+    
+    return Degrees;
+}
