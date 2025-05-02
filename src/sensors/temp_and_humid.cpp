@@ -33,3 +33,9 @@ bool power_on_temp_and_humidity()
 
   return true;
 }
+
+bool process_temp_and_humidity()
+{
+  float temperature = temp_hud.readTemperature();
+  float humidity = temp_hud.readHumidity();
+}
