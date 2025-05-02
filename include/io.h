@@ -1,3 +1,6 @@
+#ifndef IO_H
+#define IO_H
+
 #include <cstdint>
 
 enum sensors_id : uint8_t {
@@ -11,3 +14,5 @@ enum sensors_id : uint8_t {
 bool store_data(unsigned char *arr, std::size_t sz);
 bool write_and_transmit(enum sensors_id SID, double x);
 bool write_and_transmit(enum sensors_id SID, int x);
+
+#endif // IO_H
