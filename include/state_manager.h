@@ -1,24 +1,9 @@
 #pragma once
 #ifndef STATE_MANAGER_H
 #define STATE_MANAGER_H
+#include <cstdint>
 
-// Enums for critical and non-critical sensors
-enum critical_sensors_index
-{
-  BAROMETER,
-  MAIN_IMU,
-  BACKUP_IMU,
-  GPS
-};
-
-enum non_critical_sensors_index
-{
-  MAGNETOMETER,
-  TEMPHUD, // temperature & humidity sensor
-  RTC      // real time clock
-};
-
-enum Axes
+enum axes : uint8_t
 {
   X,
   Y,
@@ -26,7 +11,7 @@ enum Axes
 };
 
 // Flight states
-enum flight_state
+enum flight_state : uint8_t
 {
   INIT,
   IDLE,

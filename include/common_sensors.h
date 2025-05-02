@@ -1,8 +1,8 @@
 #ifndef COMMON_SENSORS_H
 #define COMMON_SENSORS_H
 #include <cstdint>
-
 #include <Wire.h>
+
 #include <SparkFun_MMC5983MA_Arduino_Library.h> // Magnetometer Sensor Library
 #include <Adafruit_Sensor.h>                    // Main IMU Library
 #include <Adafruit_BNO055.h>                    // Main IMU Library
@@ -32,6 +32,23 @@ constexpr int8_t COMMON_LOWER_TEMP = -40;         // degress Celsius (multiple s
 constexpr uint8_t MAGNETOMETER_UPPER_TEMP = 105;  // degress Celsius
 constexpr uint8_t COMMON_UPPER_TEMP = 85;         // degress Celsius (multiple sensors share this higher tempearture operating range)
 constexpr uint8_t TEMP_HUMIDITY_UPPER_TEMP = 125; // degress Celsius
+
+typedef union
+{
+  int Integer; // Integer Numbers
+  float Real;  // Real Numbers
+} sensor_values;
+
+enum sensors : uint8_t
+{
+  BAROMETER = 0,
+  IMUS,
+  MAGNETOMETER,
+  REAL_TIME_CLOCK,
+  TEMP_AND_HUMID,
+  GPS,
+  AMOUNT_SENSORS
+};
 
 /**
  * @brief Checks if a device at the specified I2C address is responsive
