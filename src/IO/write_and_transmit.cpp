@@ -1,7 +1,7 @@
 #include <io.h>
 #include <cstdint>
 
-bool write_and_transmit(enum sensors_id SID, double x) {
+bool write_and_transmit(enum sensors SID, double x) {
   unsigned char b_arr[1 + sizeof(x)] = {SID};
   unsigned char *ptr = (unsigned char*) &x;
   
@@ -14,7 +14,7 @@ bool write_and_transmit(enum sensors_id SID, double x) {
   return false;
 }
 
-bool write_and_transmit(enum sensors_id SID, uint32_t x) {
+bool write_and_transmit(enum sensors SID, uint32_t x) {
   unsigned char b_arr[1 + sizeof(x)] = {SID};
   unsigned char *ptr = (unsigned char*) &x;
   
