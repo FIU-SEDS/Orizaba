@@ -38,7 +38,7 @@ enum sensors : uint8_t
   REAL_TIME_CLOCK,
   TEMP_AND_HUMID,
   GPS,
-  AMOUNT_SENSORS
+  SENSORS_AMOUNT
 };
 
 /**
