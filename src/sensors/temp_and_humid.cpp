@@ -1,5 +1,6 @@
 #include <common_sensors.h>
 #include <Adafruit_HTU21DF.h> // Temperature and Humidity Sensor Library
+#include <io.h>
 
 Adafruit_HTU21DF temp_hud = Adafruit_HTU21DF();
 
@@ -35,8 +36,20 @@ bool power_on_temp_and_humidity()
   return true;
 }
 
-bool process_temp_and_humidity()
+bool process_humidity()
+{
+  float humidity = temp_hud.readHumidity();
+  global_sensor_vals[HUMID] = humidity;
+  write_and_transmit(HUMID, humidity);
+  
+  return true;
+}
+
+bool process_temp()
 {
   float temperature = temp_hud.readTemperature();
-  float humidity = temp_hud.readHumidity();
+  global_sensor_vals[TEMP] = temperature;
+  write_and_transmit(TEMP, temperature);
+
+  return true;
 }

@@ -1,4 +1,5 @@
 #include <common_sensors.h>
+#include <io.h>
 #include <SparkFun_MMC5983MA_Arduino_Library.h> // Magnetometer Sensor Library
 
 SFE_MMC5983MA magnetometer; // Magnetometer MMC5983MA object
@@ -82,6 +83,14 @@ double get_heading() // function for direction in degrees
   Degrees *= 180; // convert to degrees
   Degrees += 180; // shift to range [0,360]
   // now suitable as compass direction
-
+  
   return Degrees;
+}
+
+bool process_magnemeter() {
+  double hd = get_heading();
+  write_and_transmit(MAGNETOMETER, hd);
+  global_sensor_vals[MAGNETOMETER] = hd;
+
+  return true;
 }

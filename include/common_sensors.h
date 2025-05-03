@@ -24,22 +24,19 @@ constexpr uint8_t MAGNETOMETER_UPPER_TEMP = 105;  // degress Celsius
 constexpr uint8_t COMMON_UPPER_TEMP = 85;         // degress Celsius (multiple sensors share this higher tempearture operating range)
 constexpr uint8_t TEMP_HUMIDITY_UPPER_TEMP = 125; // degress Celsius
 
-typedef union
-{
-  int Integer; // Integer Numbers
-  float Real;  // Real Numbers
-} sensor_values;
-
 enum sensors : uint8_t
 {
-  BAROMETER = 0,
+  BAROMETER,
   IMUS,
   MAGNETOMETER,
   REAL_TIME_CLOCK,
-  TEMP_AND_HUMID,
+  TEMP,
+  HUMID,
   GPS,
   SENSORS_AMOUNT
 };
+
+extern float global_sensor_vals[SENSORS_AMOUNT];
 
 /**
  * @brief Checks if a device at the specified I2C address is responsive
