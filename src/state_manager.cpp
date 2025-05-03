@@ -13,7 +13,7 @@ bool initialize_all_sensors()
     !power_on_temp_and_humidity() ||
     !power_on_GPS()
   ) {
-    SCB_AIRCR = 0x05FA0004;
+    SCB_AIRCR = 0x05FA0004; // should reset teensy4.1
   }
 
   return true;
