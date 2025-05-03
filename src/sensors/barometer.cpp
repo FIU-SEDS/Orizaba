@@ -23,9 +23,9 @@ double read_altitude(float sea_level_pressure)
 {
   float altitude;
 
-  float pressure = barometer.getPressurePascal();
+  float pressure = (barometer.getPressurePascal()) / 100.0F ; // conversion from pacals to hectopascals
 
-  altitude = ATMOSPHERE_HEIGHT_METERS * (1.0 - pow(pressure / SEA_LEVEL_PRESSURE, PRESSURE_EXPONENT)); // formula for altitude
+  altitude = ATMOSPHERE_HEIGHT_METERS * (1.0F - pow(pressure / SEA_LEVEL_PRESSURE, PRESSURE_EXPONENT)); // formula for altitude
   altitude *= METERS_TO_FEET;                                                                          // converts from meters to feet
 
   return altitude;
