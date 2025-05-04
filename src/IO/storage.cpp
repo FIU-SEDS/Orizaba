@@ -2,6 +2,7 @@
 #include <SPI.h>
 #include<SPIMemory.h>
 #include <cstdint>
+#include <vector>
 
 #include <common_sensors.h>
 
@@ -10,7 +11,15 @@ SPIFlash flash;
 
 uint32_t last_addr;
 
-bool power_on_storage() {
+void serial::serialize_float(float f)
+{
+  for(size_t i = 0; i < sizeof(f); i++) {
+    vec.push_back(f[i]);
+  }
+}
+
+bool power_on_storage() 
+{
   SD.begin(SD_CARD_MODULE_CS_PIN);
 
   if(!(sd_card = SD.open("sensorData.txt", FILE_WRITE)))
@@ -27,7 +36,8 @@ bool power_on_storage() {
   return true;
 }
 
-bool store_data(unsigned char *arr, std::size_t sz) {
+bool store_data(unsigned char *arr, std::size_t sz) 
+{
   sd_card.write(arr, sz);
   flash.writeByteArray(last_addr, arr, sz, false);
   last_addr += sz;
