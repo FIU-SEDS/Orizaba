@@ -14,8 +14,8 @@ bool write_and_transmit(enum sensors SID, double x) {
   return false;
 }
 
-bool write_and_transmit(enum sensors SID, serial s) {
+bool write_and_transmit(enum sensors SID, serial &s) {
   s.ser.insert(s.ser.begin(), SID);
-  store_data(&s.ser[0], s.ser.length());
+  store_data(&s.ser[0], s.ser.size());
   return false;
 }

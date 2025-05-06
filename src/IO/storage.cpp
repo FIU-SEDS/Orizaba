@@ -3,7 +3,7 @@
 #include<SPIMemory.h>
 #include <cstdint>
 #include <vector>
-
+#include <io.h>
 #include <common_sensors.h>
 
 File sd_card;
@@ -13,8 +13,9 @@ uint32_t last_addr;
 
 void serial::serialize_float(float f)
 {
+  unsigned char *f_arr = (unsigned char*) &f;
   for(size_t i = 0; i < sizeof(f); i++) {
-    vec.push_back(f[i]);
+    ser.push_back(f_arr[i]);
   }
 }
 

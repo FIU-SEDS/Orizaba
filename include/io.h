@@ -4,9 +4,8 @@
 
 struct serial {
   std::vector<unsigned char> ser;
-  bool serialize_float(float f);
-}
-
+  void serialize_float(float f);
+};
 
 bool store_data(unsigned char *arr, std::size_t sz);
 bool write_and_transmit(enum sensors SID, double x);
