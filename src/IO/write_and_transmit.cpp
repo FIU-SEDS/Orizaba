@@ -1,11 +1,11 @@
 #include <io.h>
 #include <cstdint>
 
-bool write_and_transmit(enum sensors SID, double x) {
+bool write_and_transmit(enum sensors SID, float x) {
   unsigned char b_arr[1 + sizeof(x)] = {SID};
   unsigned char *ptr = (unsigned char*) &x;
   
-  for(std::size_t i = 0; i < sizeof(double); i++) {
+  for(std::size_t i = 0; i < sizeof(x); i++) {
     b_arr[i + 1] = ptr[i];
   }
 

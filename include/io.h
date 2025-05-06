@@ -8,7 +8,6 @@ struct serial {
 };
 
 bool store_data(unsigned char *arr, std::size_t sz);
-bool write_and_transmit(enum sensors SID, double x);
-bool write_and_transmit(enum sensors SID, int x);
+bool write_and_transmit(enum sensors SID, float x);
 
 #endif // IO_H
