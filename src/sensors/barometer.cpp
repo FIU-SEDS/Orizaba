@@ -59,7 +59,7 @@ bool process_barometer()
 {
   double p = read_altitude(SEA_LEVEL_PRESSURE);
   write_and_transmit(BAROMETER, p);
-  global_sensor_vals[BAROMETER] = p;
+  global_sensor_vals[ALTITUDE] = p;
 
   return true;
 }

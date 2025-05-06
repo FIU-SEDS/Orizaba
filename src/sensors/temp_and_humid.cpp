@@ -48,7 +48,7 @@ bool process_humidity()
 bool process_temp()
 {
   float temperature = temp_hud.readTemperature();
-  global_sensor_vals[TEMP] = temperature;
+  global_sensor_vals[TEMPERATURE] = temperature;
   write_and_transmit(TEMP, temperature);
 
   return true;

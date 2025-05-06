@@ -1,5 +1,4 @@
 #include <io.h>
-#include <cstdint>
 
 bool write_and_transmit(enum sensors SID, float x) {
   unsigned char b_arr[1 + sizeof(x)] = {SID};

@@ -24,7 +24,7 @@ constexpr uint8_t MAGNETOMETER_UPPER_TEMP = 105;  // degress Celsius
 constexpr uint8_t COMMON_UPPER_TEMP = 85;         // degress Celsius (multiple sensors share this higher tempearture operating range)
 constexpr uint8_t TEMP_HUMIDITY_UPPER_TEMP = 125; // degress Celsius
 
-enum sensors : uint8_t
+enum sensors : uint8_t // this is to be used as the PACKET IDs when sending data over radio!
 {
   BAROMETER,
   IMUS,
@@ -36,7 +36,25 @@ enum sensors : uint8_t
   SENSORS_AMOUNT
 };
 
-extern float global_sensor_vals[SENSORS_AMOUNT];
+enum sensor_readouts : uint8_t // this is to be used as the index for the global array!
+{
+  ACCEL, // IMUS
+  GYRO,
+  EULER,
+  LINEAR,
+  GRAVITY,
+  ALTITUDE, // barometer
+  TEMPERATURE, // temp
+  HUMIDITY, // humid
+  SECONDS, // real time clock
+  HEADING, // magnetometer
+  LATITUDE, // GPS
+  LONGITUDE,
+  SENSOR_READOUTS_AMOUNT
+};
+
+//extern float global_sensor_vals[SENSORS_AMOUNT]; // defunct! We want a global array of all the sensor readouts.
+extern float global_sensor_vals[SENSOR_READOUTS_AMOUNT];
 
 /**
  * @brief Checks if a device at the specified I2C address is responsive

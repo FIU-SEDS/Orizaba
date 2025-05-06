@@ -90,7 +90,7 @@ double get_heading() // function for direction in degrees
 bool process_magnemeter() {
   double hd = get_heading();
   write_and_transmit(MAGNETOMETER, hd);
-  global_sensor_vals[MAGNETOMETER] = hd;
+  global_sensor_vals[HEADING] = hd;
 
   return true;
 }
