@@ -72,3 +72,12 @@ bool power_on_backup_IMU()
 
     return true;
 }
+
+bool process_IMUs()
+{
+    sensors_event_t angluar_velocity, linear_accleration, accelerometer_data, gravity_data;
+    main_IMU.getEvent(&angluar_velocity, Adafruit_BNO055::VECTOR_GYROSCOPE);
+    main_IMU.getEvent(&linear_accleration, Adafruit_BNO055::VECTOR_LINEARACCEL);
+    main_IMU.getEvent(&accelerometer_data, Adafruit_BNO055::VECTOR_ACCELEROMETER); // only in Z-axis
+    main_IMU.getEvent(&gravity_data, Adafruit_BNO055::VECTOR_GRAVITY);             // only in Z-axis
+}
