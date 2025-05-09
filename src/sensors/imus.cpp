@@ -19,6 +19,8 @@ constexpr float GRAVITY_CONSTANT = 9.8;           // measured in m/s^2
 constexpr uint16_t MG_TO_G = 1000;                // conversion factor for microgravity (mg) to gravity (g)
 constexpr uint8_t INVALID_GRAVITY_THRESHOLD = 30; // 30Gs max ceiling for sensor if not considered faulty
 constexpr float DEG_TO_RAD_PER_SECOND = (M_PI / 180.0) / 1000.0; // conversion factor for degrees per second to radians per second
+constexpr uint8_t AXIS_SIZE = 3;
+
 
 // Sensor objects
 Adafruit_BNO055 main_IMU = Adafruit_BNO055(55, 0x28);      // main IMU BNO055 object
@@ -204,8 +206,8 @@ bool process_IMUs()
 {
     sensors_event_t angular_velocity, linear_accleration, main_IMU_accelerometer, gravity; // typedef datatype for main IMU
     // Arrays to hold accelerometer readings
-    int32_t backup_IMU_accelerometer[3] = {}; // For current acceleration reading (x, y, z)
-    int32_t backup_IMU_gyroscope[3] = {};     // For current gyroscope reading (x, y, z)
+    int32_t backup_IMU_accelerometer[AXIS_SIZE] = {}; // For current acceleration reading (x, y, z)
+    int32_t backup_IMU_gyroscope[AXIS_SIZE] = {};     // For current gyroscope reading (x, y, z)
 
     main_IMU.getEvent(&angular_velocity, Adafruit_BNO055::VECTOR_GYROSCOPE);
     main_IMU.getEvent(&linear_accleration, Adafruit_BNO055::VECTOR_LINEARACCEL);
@@ -221,13 +223,9 @@ bool process_IMUs()
 
     float avg_gyro_x, avg_gyro_y, avg_gyro_z;
     get_total_angular_velocity(angular_velocity, backup_IMU_gyroscope, &avg_gyro_x, &avg_gyro_y, &avg_gyro_z);
-    //ERIEL PLEASE REVIEW
-
 
     // float total_acceleration =
     // float z_axis_acceleration = main_IMU_accelerometer.acceleration.z; // in m/s2
 
     // MISSING Z_AXIS_ACCEL, TOTAL ACCEL, VELOCITY, TOTAL VELO
-
-    
 }
