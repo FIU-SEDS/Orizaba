@@ -18,7 +18,9 @@
 constexpr float GRAVITY_CONSTANT = 9.8;           // measured in m/s^2
 constexpr uint16_t MG_TO_G = 1000;                // conversion factor for microgravity (mg) to gravity (g)
 constexpr uint8_t INVALID_GRAVITY_THRESHOLD = 30; // 30Gs max ceiling for sensor if not considered faulty
+constexpr float DEG_TO_RAD_PER_SECOND = (M_PI / 180.0) / 1000.0; // conversion factor for degrees per second to radians per second
 constexpr uint8_t AXIS_SIZE = 3;
+
 
 // Sensor objects
 Adafruit_BNO055 main_IMU = Adafruit_BNO055(55, 0x28);      // main IMU BNO055 object
@@ -57,7 +59,7 @@ float get_tilt_angle(sensors_event_t gravity)
     float tilt_alignment = gravity_vec[2];                // Dot product simplified for this case
     float tilt_angle = acos(tilt_alignment) * (180 / PI); // Convert to degrees
 
-    return tilt_angle;
+    return tilt_angle;  
 }
 
 float get_z_g_force(sensors_event_t main_IMU_accelerometer, int32_t backup_IMU_accelerometer[])
@@ -73,7 +75,7 @@ float get_z_g_force(sensors_event_t main_IMU_accelerometer, int32_t backup_IMU_a
 
     if (main_valid && backup_valid)
     {
-        combined_z_g_forces = (main_gravity_z + backup_gravity_z) / 2.0 // average of combined readings
+        combined_z_g_forces = (main_gravity_z + backup_gravity_z) / 2.0; // average of combined readings
     }
     else if (main_valid)
     {
@@ -105,6 +107,56 @@ float get_total_g_forces(sensors_event_t main_IMU_accelerometer, int32_t backup_
 
     return total_g_forces;
 }
+//gyroscope average 
+float get_total_angular_velocity(sensors_event_t angular_velocity, int32_t backup_IMU_gyroscope[], float *avg_gyro_x, float *avg_gyro_y, float *avg_gyro_z)
+{
+    // main IMU values (already in rad/s)
+    float main_gyro_x = angular_velocity.gyro.x;
+    float main_gyro_y = angular_velocity.gyro.y;
+    float main_gyro_z = angular_velocity.gyro.z;
+
+    //converting backup IMU from deg to rad/s
+    float backup_gyro_x_rad = backup_IMU_gyroscope[0] * DEG_TO_RAD_PER_SECOND;
+    float backup_gyro_y_rad = backup_IMU_gyroscope[1] * DEG_TO_RAD_PER_SECOND;
+    float backup_gyro_z_rad = backup_IMU_gyroscope[2] * DEG_TO_RAD_PER_SECOND;
+
+    //verifying if readings are valid 
+    bool main_valid_x = !isnan(main_gyro_x) && abs(main_gyro_x) < 10.0;
+    bool main_valid_y = !isnan(main_gyro_y) && abs(main_gyro_y) < 10.0;
+    bool main_valid_z = !isnan(main_gyro_z) && abs(main_gyro_z) < 10.0;
+
+    bool backup_valid_x = !isnan(backup_gyro_x_rad) && abs(backup_gyro_x_rad) < 10.0;
+    bool backup_valid_y = !isnan(backup_gyro_y_rad) && abs(backup_gyro_y_rad) < 10.0;
+    bool backup_valid_z = !isnan(backup_gyro_z_rad) && abs(backup_gyro_z_rad) < 10.0;
+
+    //calculating average for x-axis between both IMUs
+    if (main_valid_x && backup_valid_x) {
+        *avg_gyro_x = (main_gyro_x + backup_gyro_x_rad) / 2.0;
+    } else if (main_valid_x) {
+        *avg_gyro_x = main_gyro_x;
+    } else {
+        *avg_gyro_x = backup_gyro_x_rad;
+}
+    //calculating average for y-axis between both IMUs
+    if (main_valid_y && backup_valid_y) {
+        *avg_gyro_y = (main_gyro_y + backup_gyro_y_rad) / 2.0;
+    } else if (main_valid_y) {
+        *avg_gyro_y = main_gyro_y;
+    } else {
+        *avg_gyro_y = backup_gyro_y_rad;
+}
+
+    //calculating average for z-axis between both IMUs
+    if (main_valid_z && backup_valid_z) {
+        *avg_gyro_z = (main_gyro_z + backup_gyro_z_rad) / 2.0;
+    } else if (main_valid_z) {
+        *avg_gyro_z = main_gyro_z;
+    } else {
+        *avg_gyro_z = backup_gyro_z_rad;
+}
+
+}
+
 
 bool power_on_main_IMU()
 {
@@ -152,12 +204,12 @@ bool power_on_backup_IMU()
 
 bool process_IMUs()
 {
-    sensors_event_t angluar_velocity, linear_accleration, main_IMU_accelerometer, gravity; // typedef datatype for main IMU
+    sensors_event_t angular_velocity, linear_accleration, main_IMU_accelerometer, gravity; // typedef datatype for main IMU
     // Arrays to hold accelerometer readings
     int32_t backup_IMU_accelerometer[AXIS_SIZE] = {}; // For current acceleration reading (x, y, z)
     int32_t backup_IMU_gyroscope[AXIS_SIZE] = {};     // For current gyroscope reading (x, y, z)
 
-    main_IMU.getEvent(&angluar_velocity, Adafruit_BNO055::VECTOR_GYROSCOPE);
+    main_IMU.getEvent(&angular_velocity, Adafruit_BNO055::VECTOR_GYROSCOPE);
     main_IMU.getEvent(&linear_accleration, Adafruit_BNO055::VECTOR_LINEARACCEL);
     main_IMU.getEvent(&main_IMU_accelerometer, Adafruit_BNO055::VECTOR_ACCELEROMETER);
     main_IMU.getEvent(&gravity, Adafruit_BNO055::VECTOR_GRAVITY);
@@ -168,6 +220,12 @@ bool process_IMUs()
     float z_axis_g_force = get_z_g_force(main_IMU_accelerometer, backup_IMU_accelerometer); // used to measure flight
     float total_g_force = get_total_g_forces(main_IMU_accelerometer, backup_IMU_accelerometer);
     float tilt_angle = get_tilt_angle(gravity);
+
+    float avg_gyro_x, avg_gyro_y, avg_gyro_z;
+    get_total_angular_velocity(angular_velocity, backup_IMU_gyroscope, &avg_gyro_x, &avg_gyro_y, &avg_gyro_z);
+
+    // float total_acceleration =
+    // float z_axis_acceleration = main_IMU_accelerometer.acceleration.z; // in m/s2
 
     // MISSING Z_AXIS_ACCEL, TOTAL ACCEL, VELOCITY, TOTAL VELO
 }
