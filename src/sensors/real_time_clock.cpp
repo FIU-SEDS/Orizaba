@@ -5,7 +5,6 @@ MCP7940_Class real_time_clock; // RTC object
 
 bool power_on_real_time_clock()
 {
-
   if (real_time_clock.begin() == false)
   {
     Serial.println("Real time clock BEGIN function failed.");
@@ -23,7 +22,12 @@ bool power_on_real_time_clock()
     }
   }
 
-  real_time_clock.adjust(); //  RTC is set to the date and time when the program was compiled
+  #if RTC_ADJUST == 1
+  real_time_clock.adjust(); 
+  //  RTC is set to the date and time when the program was compiled
+  // we set the time for the real time clock at compile time only ONCE. The clock is set up with
+  // a battery as to never
+  #endif 
 
   if (!is_device_connected(REAL_TIME_CLOCK_ADDRESS))
   {
