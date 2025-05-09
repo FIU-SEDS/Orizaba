@@ -73,7 +73,7 @@ float get_z_g_force(sensors_event_t main_IMU_accelerometer, int32_t backup_IMU_a
 
     if (main_valid && backup_valid)
     {
-        combined_z_g_forces = (main_gravity_z + backup_gravity_z) / 2.0 // average of combined readings
+        combined_z_g_forces = (main_gravity_z + backup_gravity_z) / 2.0; // average of combined readings
     }
     else if (main_valid)
     {
