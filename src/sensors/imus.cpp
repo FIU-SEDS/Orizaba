@@ -108,7 +108,7 @@ float get_total_g_forces(sensors_event_t main_IMU_accelerometer, int32_t backup_
 }
 
 // gets the average angular velocity (rads/s) from main and backup IMUs
-float get_average_angular_velocity(sensors_event_t angular_velocity, int32_t backup_IMU_gyroscope[], float *avg_gyro_x, float *avg_gyro_y, float *avg_gyro_z)
+void get_average_angular_velocity(sensors_event_t angular_velocity, int32_t backup_IMU_gyroscope[], float *avg_gyro_x, float *avg_gyro_y, float *avg_gyro_z)
 {
     // main IMU values (already in rad/s)
     float main_gyro_x = angular_velocity.gyro.x;
@@ -116,9 +116,9 @@ float get_average_angular_velocity(sensors_event_t angular_velocity, int32_t bac
     float main_gyro_z = angular_velocity.gyro.z;
 
     // converting backup IMU from deg to rad/s
-    float backup_gyro_x_rad = backup_IMU_gyroscope[0] * DEG_TO_RAD_PER_SECOND;
-    float backup_gyro_y_rad = backup_IMU_gyroscope[1] * DEG_TO_RAD_PER_SECOND;
-    float backup_gyro_z_rad = backup_IMU_gyroscope[2] * DEG_TO_RAD_PER_SECOND;
+    float backup_gyro_x_rad = static_cast<float>(backup_IMU_gyroscope[0]) * DEG_TO_RAD_PER_SECOND;
+    float backup_gyro_y_rad = static_cast<float>(backup_IMU_gyroscope[1]) * DEG_TO_RAD_PER_SECOND;
+    float backup_gyro_z_rad = static_cast<float>(backup_IMU_gyroscope[2]) * DEG_TO_RAD_PER_SECOND;
 
     // verifying if readings are valid
     bool main_valid_x = !isnan(main_gyro_x) && abs(main_gyro_x) < 10.0;
@@ -171,6 +171,16 @@ float get_average_angular_velocity(sensors_event_t angular_velocity, int32_t bac
     }
 }
 
+void get_average_acceleration(sensors_event_t main_IMU_accelerometer, int32_t backup_IMU_accelerometer[], float *avg_accel_x, float *avg_accel_y, float *avg_accel_z)
+{
+    // main IMU values (in m/s^2)
+    float main_accel_x = main_IMU_accelerometer.acceleration.x;
+    float main_accel_y = main_IMU_accelerometer.acceleration.y;
+    float main_accel_z = main_IMU_accelerometer.acceleration.z;
+
+    // backup IMU readings are in milligravity convert to m/s^2
+}
+
 bool power_on_main_IMU()
 {
     if (main_IMU.begin() == false)
@@ -180,6 +190,7 @@ bool power_on_main_IMU()
     }
 
     main_IMU.setExtCrystalUse(true); // external crystal provies more reliable and percise measurements
+
     if (!is_device_connected(MAIN_IMU_ADDRESS))
     {
         Serial.println("Main IMU I2C check failed.");
@@ -235,7 +246,8 @@ bool process_IMUs()
     float total_g_force = get_total_g_forces(main_IMU_accelerometer, backup_IMU_accelerometer);
     float tilt_angle = get_tilt_angle(gravity);
 
-    get_average_angular_velocity(angular_velocity, backup_IMU_gyroscope, &avg_gyro_x, &avg_gyro_y, &avg_gyro_z);
+    get_average_angular_velocity(angular_velocity, backup_IMU_gyroscope, &avg_gyro_x, &avg_gyro_y, &avg_gyro_z);          // raw angular velocity data averaged out from both IMUs
+    get_average_acceleration(main_IMU_accelerometer, backup_IMU_accelerometer, &avg_accel_x, &avg_accel_y, &avg_accel_z); // raw acceleartion data averaged out from both IMUs
 
     // float total_acceleration =
     // float z_axis_acceleration = main_IMU_accelerometer.acceleration.z; // in m/s2
