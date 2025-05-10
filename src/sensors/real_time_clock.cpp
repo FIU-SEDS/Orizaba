@@ -27,6 +27,7 @@ bool power_on_real_time_clock()
   //  RTC is set to the date and time when the program was compiled
   // we set the time for the real time clock at compile time only ONCE. The clock is set up with
   // a battery as to never
+  exit(0);
   #endif 
 
   if (!is_device_connected(REAL_TIME_CLOCK_ADDRESS))
