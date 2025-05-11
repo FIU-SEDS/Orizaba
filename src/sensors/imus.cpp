@@ -38,8 +38,10 @@ float get_tilt_angle(sensors_event_t gravity)
 {
 
     // Calculate rocket attitude relative to ground
-    // Dot product of gravity vector with rocket's Z axis gives tilt angle
-    float rocket_vertical_axis[3] = {0, 0, 1}; // Assuming Z is rocket's long axis
+    /*
+    Dot product of gravity vector with rocket's Z axis gives tilt angle float rocket_vertical_axis[3] = {0, 0, 1}; assuming Z is rocket's long axis here is the formula: dot_product = 0*gravity_vec[0] + 0*gravity_vec[1] + 1*gravity_vec[2] = gravity_vec[2]
+    */
+
     float gravity_vec[3] = {gravity.acceleration.x,
                             gravity.acceleration.y,
                             gravity.acceleration.z};
@@ -178,7 +180,59 @@ void get_average_acceleration(sensors_event_t main_IMU_accelerometer, int32_t ba
     float main_accel_y = main_IMU_accelerometer.acceleration.y;
     float main_accel_z = main_IMU_accelerometer.acceleration.z;
 
-    // backup IMU readings are in milligravity convert to m/s^2
+    // backup IMU readings are in milligravity converted to m/s^2
+    float backup_accel_x = (static_cast<float>(backup_IMU_accelerometer[0]) / MG_TO_G) * GRAVITY_CONSTANT;
+    float backup_accel_y = (static_cast<float>(backup_IMU_accelerometer[1]) / MG_TO_G) * GRAVITY_CONSTANT;
+    float backup_accel_z = (static_cast<float>(backup_IMU_accelerometer[2]) / MG_TO_G) * GRAVITY_CONSTANT;
+
+    bool main_accel_valid_x = !isnan(main_accel_x) && abs(main_accel_x) < 10.0;
+    bool main_accel_valid_y = !isnan(main_accel_y) && abs(main_accel_y) < 10.0;
+    bool main_accel_valid_z = !isnan(main_accel_z) && abs(main_accel_z) < 10.0;
+
+    bool backup_accel_valid_x = !isnan(backup_accel_x) && abs(backup_accel_x) < 10.0;
+    bool backup_accel_valid_y = !isnan(backup_accel_y) && abs(backup_accel_y) < 10.0;
+    bool backup_accel_valid_z = !isnan(backup_accel_z) && abs(backup_accel_z) < 10.0;
+
+    // calculating average for x-axis between both IMUs
+    if (main_accel_valid_x && backup_accel_valid_x)
+    {
+        *avg_accel_x = (main_accel_x + backup_accel_x) / 2.0;
+    }
+    else if (main_accel_valid_x)
+    {
+        *avg_accel_x = main_accel_x;
+    }
+    else
+    {
+        *avg_accel_x = backup_accel_x;
+    }
+    // calculating average for y-axis between both IMUs
+    if (main_accel_valid_y && backup_accel_valid_y)
+    {
+        *avg_accel_y = (main_accel_y + backup_accel_y) / 2.0;
+    }
+    else if (main_accel_valid_y)
+    {
+        *avg_accel_y = main_accel_valid_y;
+    }
+    else
+    {
+        *avg_accel_y = backup_accel_y;
+    }
+
+    // calculating average for z-axis between both IMUs
+    if (main_accel_valid_z && backup_accel_valid_z)
+    {
+        *avg_accel_z = (main_accel_z + backup_accel_z) / 2.0;
+    }
+    else if (main_accel_valid_z)
+    {
+        *avg_accel_z = main_accel_z;
+    }
+    else
+    {
+        *avg_accel_z = backup_accel_z;
+    }
 }
 
 bool power_on_main_IMU()
@@ -249,8 +303,6 @@ bool process_IMUs()
     get_average_angular_velocity(angular_velocity, backup_IMU_gyroscope, &avg_gyro_x, &avg_gyro_y, &avg_gyro_z);          // raw angular velocity data averaged out from both IMUs
     get_average_acceleration(main_IMU_accelerometer, backup_IMU_accelerometer, &avg_accel_x, &avg_accel_y, &avg_accel_z); // raw acceleartion data averaged out from both IMUs
 
-    // float total_acceleration =
-    // float z_axis_acceleration = main_IMU_accelerometer.acceleration.z; // in m/s2
-
     // MISSING Z_AXIS_ACCEL, TOTAL ACCEL, VELOCITY, TOTAL VELO
+    return true;
 }
