@@ -299,6 +299,9 @@ bool process_IMUs()
     float z_axis_g_force = get_z_g_force(main_IMU_accelerometer, backup_IMU_accelerometer); // used to measure flight
     float total_g_force = get_total_g_forces(main_IMU_accelerometer, backup_IMU_accelerometer);
     float tilt_angle = get_tilt_angle(gravity);
+    float linear_accel_x = linear_accleration.acceleration.x;
+    float linear_accel_y = linear_accleration.acceleration.y;
+    float linear_accel_z = linear_accleration.acceleration.z;
 
     get_average_angular_velocity(angular_velocity, backup_IMU_gyroscope, &avg_gyro_x, &avg_gyro_y, &avg_gyro_z);          // raw angular velocity data averaged out from both IMUs
     get_average_acceleration(main_IMU_accelerometer, backup_IMU_accelerometer, &avg_accel_x, &avg_accel_y, &avg_accel_z); // raw acceleartion data averaged out from both IMUs
