@@ -18,6 +18,7 @@
 constexpr float GRAVITY_CONSTANT = 9.8;                          // measured in m/s^2
 constexpr uint16_t MG_TO_G = 1000;                               // conversion factor for microgravity (mg) to gravity (g)
 constexpr uint8_t INVALID_GRAVITY_THRESHOLD = 30;                // 30Gs max ceiling for sensor if not considered faulty
+constexpr uint8_t INVALID_ROTATIONAL_THRESHOLD = 12;             // reason for 12 rad/s thereshold is only to detect catastrophic tumbling not minor spins
 constexpr float DEG_TO_RAD_PER_SECOND = (M_PI / 180.0) / 1000.0; // conversion factor for degrees per second to radians per second
 constexpr uint8_t AXIS_SIZE = 3;
 
@@ -110,7 +111,7 @@ float get_total_g_forces(sensors_event_t main_IMU_accelerometer, int32_t backup_
 }
 
 // gets the average angular velocity (rads/s) from main and backup IMUs
-void get_average_angular_velocity(sensors_event_t angular_velocity, int32_t backup_IMU_gyroscope[], float *avg_gyro_x, float *avg_gyro_y, float *avg_gyro_z)
+void get_average_angular_velocity(sensors_event_t angular_velocity, int32_t backup_IMU_gyroscope[], float &avg_gyro_x, float &avg_gyro_y, float &avg_gyro_z)
 {
     // main IMU values (already in rad/s)
     float main_gyro_x = angular_velocity.gyro.x;
@@ -123,57 +124,57 @@ void get_average_angular_velocity(sensors_event_t angular_velocity, int32_t back
     float backup_gyro_z_rad = static_cast<float>(backup_IMU_gyroscope[2]) * DEG_TO_RAD_PER_SECOND;
 
     // verifying if readings are valid
-    bool main_valid_x = !isnan(main_gyro_x) && abs(main_gyro_x) < 10.0;
-    bool main_valid_y = !isnan(main_gyro_y) && abs(main_gyro_y) < 10.0;
-    bool main_valid_z = !isnan(main_gyro_z) && abs(main_gyro_z) < 10.0;
+    bool main_valid_x = !isnan(main_gyro_x) && abs(main_gyro_x) < INVALID_ROTATIONAL_THRESHOLD;
+    bool main_valid_y = !isnan(main_gyro_y) && abs(main_gyro_y) < INVALID_ROTATIONAL_THRESHOLD;
+    bool main_valid_z = !isnan(main_gyro_z) && abs(main_gyro_z) < INVALID_ROTATIONAL_THRESHOLD;
 
-    bool backup_valid_x = !isnan(backup_gyro_x_rad) && abs(backup_gyro_x_rad) < 10.0;
-    bool backup_valid_y = !isnan(backup_gyro_y_rad) && abs(backup_gyro_y_rad) < 10.0;
-    bool backup_valid_z = !isnan(backup_gyro_z_rad) && abs(backup_gyro_z_rad) < 10.0;
+    bool backup_valid_x = !isnan(backup_gyro_x_rad) && abs(backup_gyro_x_rad) < INVALID_ROTATIONAL_THRESHOLD;
+    bool backup_valid_y = !isnan(backup_gyro_y_rad) && abs(backup_gyro_y_rad) < INVALID_ROTATIONAL_THRESHOLD;
+    bool backup_valid_z = !isnan(backup_gyro_z_rad) && abs(backup_gyro_z_rad) < INVALID_ROTATIONAL_THRESHOLD;
 
     // calculating average for x-axis between both IMUs
     if (main_valid_x && backup_valid_x)
     {
-        *avg_gyro_x = (main_gyro_x + backup_gyro_x_rad) / 2.0;
+        avg_gyro_x = (main_gyro_x + backup_gyro_x_rad) / 2.0;
     }
     else if (main_valid_x)
     {
-        *avg_gyro_x = main_gyro_x;
+        avg_gyro_x = main_gyro_x;
     }
     else
     {
-        *avg_gyro_x = backup_gyro_x_rad;
+        avg_gyro_x = backup_gyro_x_rad;
     }
     // calculating average for y-axis between both IMUs
     if (main_valid_y && backup_valid_y)
     {
-        *avg_gyro_y = (main_gyro_y + backup_gyro_y_rad) / 2.0;
+        avg_gyro_y = (main_gyro_y + backup_gyro_y_rad) / 2.0;
     }
     else if (main_valid_y)
     {
-        *avg_gyro_y = main_gyro_y;
+        avg_gyro_y = main_gyro_y;
     }
     else
     {
-        *avg_gyro_y = backup_gyro_y_rad;
+        avg_gyro_y = backup_gyro_y_rad;
     }
 
     // calculating average for z-axis between both IMUs
     if (main_valid_z && backup_valid_z)
     {
-        *avg_gyro_z = (main_gyro_z + backup_gyro_z_rad) / 2.0;
+        avg_gyro_z = (main_gyro_z + backup_gyro_z_rad) / 2.0;
     }
     else if (main_valid_z)
     {
-        *avg_gyro_z = main_gyro_z;
+        avg_gyro_z = main_gyro_z;
     }
     else
     {
-        *avg_gyro_z = backup_gyro_z_rad;
+        avg_gyro_z = backup_gyro_z_rad;
     }
 }
 
-void get_average_acceleration(sensors_event_t main_IMU_accelerometer, int32_t backup_IMU_accelerometer[], float *avg_accel_x, float *avg_accel_y, float *avg_accel_z)
+void get_average_acceleration(sensors_event_t main_IMU_accelerometer, int32_t backup_IMU_accelerometer[], float &avg_accel_x, float &avg_accel_y, float &avg_accel_z)
 {
     // main IMU values (in m/s^2)
     float main_accel_x = main_IMU_accelerometer.acceleration.x;
@@ -196,42 +197,42 @@ void get_average_acceleration(sensors_event_t main_IMU_accelerometer, int32_t ba
     // calculating average for x-axis between both IMUs
     if (main_accel_valid_x && backup_accel_valid_x)
     {
-        *avg_accel_x = (main_accel_x + backup_accel_x) / 2.0;
+        avg_accel_x = (main_accel_x + backup_accel_x) / 2.0;
     }
     else if (main_accel_valid_x)
     {
-        *avg_accel_x = main_accel_x;
+        avg_accel_x = main_accel_x;
     }
     else
     {
-        *avg_accel_x = backup_accel_x;
+        avg_accel_x = backup_accel_x;
     }
     // calculating average for y-axis between both IMUs
     if (main_accel_valid_y && backup_accel_valid_y)
     {
-        *avg_accel_y = (main_accel_y + backup_accel_y) / 2.0;
+        avg_accel_y = (main_accel_y + backup_accel_y) / 2.0;
     }
     else if (main_accel_valid_y)
     {
-        *avg_accel_y = main_accel_valid_y;
+        avg_accel_y = main_accel_valid_y;
     }
     else
     {
-        *avg_accel_y = backup_accel_y;
+        avg_accel_y = backup_accel_y;
     }
 
     // calculating average for z-axis between both IMUs
     if (main_accel_valid_z && backup_accel_valid_z)
     {
-        *avg_accel_z = (main_accel_z + backup_accel_z) / 2.0;
+        avg_accel_z = (main_accel_z + backup_accel_z) / 2.0;
     }
     else if (main_accel_valid_z)
     {
-        *avg_accel_z = main_accel_z;
+        avg_accel_z = main_accel_z;
     }
     else
     {
-        *avg_accel_z = backup_accel_z;
+        avg_accel_z = backup_accel_z;
     }
 }
 
@@ -267,7 +268,6 @@ bool power_on_backup_IMU()
         Serial.println("Backup IMU BEGIN function failed.");
         return false;
     }
-
     backup_IMU.Enable_X(); // enables accelerometer component on sensor
     backup_IMU.Enable_G(); // enables gyroscope component on sensor
 
@@ -303,8 +303,8 @@ bool process_IMUs()
     float linear_accel_y = linear_accleration.acceleration.y;
     float linear_accel_z = linear_accleration.acceleration.z;
 
-    get_average_angular_velocity(angular_velocity, backup_IMU_gyroscope, &avg_gyro_x, &avg_gyro_y, &avg_gyro_z);          // raw angular velocity data averaged out from both IMUs
-    get_average_acceleration(main_IMU_accelerometer, backup_IMU_accelerometer, &avg_accel_x, &avg_accel_y, &avg_accel_z); // raw acceleartion data averaged out from both IMUs
+    get_average_angular_velocity(angular_velocity, backup_IMU_gyroscope, avg_gyro_x, avg_gyro_y, avg_gyro_z);          // raw angular velocity data averaged out from both IMUs
+    get_average_acceleration(main_IMU_accelerometer, backup_IMU_accelerometer, avg_accel_x, avg_accel_y, avg_accel_z); // raw acceleartion data averaged out from both IMUs
 
     // MISSING Z_AXIS_ACCEL, TOTAL ACCEL, VELOCITY, TOTAL VELO
     return true;
