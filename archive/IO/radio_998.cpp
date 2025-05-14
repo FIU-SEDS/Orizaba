@@ -16,5 +16,8 @@
 
 // }
 
+//AT+SEND=<Address>,<Payload Length>,<Data>
+
+
 
 
