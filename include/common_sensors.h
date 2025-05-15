@@ -38,22 +38,33 @@ enum sensors : uint8_t // this is to be used as the PACKET IDs when sending data
 
 enum sensor_readouts : uint8_t // this is to be used as the index for the global array!
 {
-  ACCEL, // IMUS
-  GYRO,
-  EULER,
-  LINEAR,
-  GRAVITY,
-  ALTITUDE, // barometer
+  AVERAGE_ACCELERATION_X,
+  AVERAGE_ACCELERATION_Y,
+  AVERAGE_ACCELERATION_Z,
+  ANGULAR_VELOCITY_X,
+  ANGULAR_VELOCITY_Y,
+  ANGULAR_VELOCITY_Z,
+  TILT_ANGLE,
+  Z_AXIS_G_FORCE,
+  TOTAL_G_FORCE,
+  LINEAR_ACCELERATION_X,
+  LINEAR_ACCELERATION_Y,
+  LINEAR_ACCELEARTION_Z,
+  LINEAR_VELOCITY_X,
+  LINEAR_VELOCITY_Y,
+  LINEAR_VELOCITY_Z,
+  PRESSURE,    // barometer in pascals
+  ALTITUDE,    // barometer in feet
   TEMPERATURE, // temp
-  HUMIDITY, // humid
-  SECONDS, // real time clock
-  HEADING, // magnetometer
-  LATITUDE, // GPS
+  HUMIDITY,    // humid
+  SECONDS,     // real time clock
+  HEADING,     // magnetometer
+  LATITUDE,    // GPS
   LONGITUDE,
   SENSOR_READOUTS_AMOUNT
 };
 
-//extern float global_sensor_vals[SENSORS_AMOUNT]; // defunct! We want a global array of all the sensor readouts.
+// extern float global_sensor_vals[SENSORS_AMOUNT]; // defunct! We want a global array of all the sensor readouts.
 extern float global_sensor_vals[SENSOR_READOUTS_AMOUNT];
 
 /**

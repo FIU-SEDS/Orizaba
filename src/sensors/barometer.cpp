@@ -19,14 +19,14 @@ bool verify_barometer_temperature(float barometer_temp_reading)
   return true;
 }
 
-double read_altitude(float sea_level_pressure)
+float read_altitude(float sea_level_pressure)
 {
   float altitude;
 
-  float pressure = (barometer.getPressurePascal()) / 100.0F ; // conversion from pacals to hectopascals
+  float pressure = (barometer.getPressurePascal()) / 100.0F; // conversion from pacals to hectopascals
 
   altitude = ATMOSPHERE_HEIGHT_METERS * (1.0F - pow(pressure / SEA_LEVEL_PRESSURE, PRESSURE_EXPONENT)); // formula for altitude
-  altitude *= METERS_TO_FEET;                                                                          // converts from meters to feet
+  altitude *= METERS_TO_FEET;                                                                           // converts from meters to feet
 
   return altitude;
 }
@@ -57,9 +57,14 @@ bool power_on_barometer()
 
 bool process_barometer()
 {
-  double p = read_altitude(SEA_LEVEL_PRESSURE);
-  write_and_transmit(BAROMETER, p);
-  global_sensor_vals[ALTITUDE] = p;
+  double altitude = read_altitude(SEA_LEVEL_PRESSURE);
+  float pressure = (barometer.getPressurePascal()) / 100.0F; // pascals converted to hectopascals
+
+  write_and_transmit(BAROMETER, pressure);
+  write_and_transmit(BAROMETER, altitude) ;
+
+  global_sensor_vals[ALTITUDE] = altitude;
+  global_sensor_vals[PRESSURE] = pressure;
 
   return true;
 }
