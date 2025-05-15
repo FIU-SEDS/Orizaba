@@ -1,6 +1,6 @@
 #include <common_sensors.h>
 
-float global_sensor_vals[SENSORS_AMOUNT] = {0};
+float global_sensor_vals[SENSOR_READOUTS_AMOUNT] = {0};
 
 bool isDeviceConnected(uint8_t address)
 {
