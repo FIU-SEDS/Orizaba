@@ -89,6 +89,21 @@ SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 
 ---
 
+### Branch Creation Template
+
+#### Describe your issue
+
+Please provide a detailed description of the issue you are reporting.
+
+#### Checklist before creating a branch
+- [ ] I have created a new branch from the `main` branch.
+- [ ] My branch name starts with either `fix/` or `feature/` followed by a descriptive name.
+- [ ] I have committed my changes and pushed them to the branch.
+- [ ] I have performed a self-review of my code and tested it on my branch.
+- [ ] I have deleted the branch after the pull request is merged into `main`
+
+---
+
 ### GUIDELINES for Setting up Platform.IO
 
 - **Single Main File:** Ensure there is only **ONE** `.cpp` file that contains `setup()` and `loop()` in your `src` directory. Multiple files with these functions will cause compilation errors.
