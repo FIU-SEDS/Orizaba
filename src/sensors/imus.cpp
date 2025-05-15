@@ -306,6 +306,6 @@ bool process_IMUs()
     get_average_angular_velocity(angular_velocity, backup_IMU_gyroscope, avg_gyro_x, avg_gyro_y, avg_gyro_z);          // raw angular velocity data averaged out from both IMUs
     get_average_acceleration(main_IMU_accelerometer, backup_IMU_accelerometer, avg_accel_x, avg_accel_y, avg_accel_z); // raw acceleartion data averaged out from both IMUs
 
-    // MISSING Z_AXIS_ACCEL, TOTAL ACCEL, VELOCITY, TOTAL VELO
+    // Missing getting average linear velocity XYZ
     return true;
 }
