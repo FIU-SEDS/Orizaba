@@ -1,22 +1,14 @@
-// #include <state_manager.h>
-// #include <common_sensors.h>
+#include <state_manager.h>
+#include <common_sensors.h>
 
-#include <Arduino.h>
 void setup()
 {
-  Serial.begin(115200);
-
-    
-    Serial.println("AT+MODE=0");
-    delay(1000);
-    Serial.println("AT+ADDRESS=1"); // transmitter address 1, ground station address 2 
-    delay(1000);
-    Serial.println("AT+BAND=915000000");
-    delay(1000);
-    Serial.println("AT+IPR=15200");
-    delay(1000);
+  power_on_Lora();
+ // initialize_all_sensors(); check
+ void transmit_data(char *b_arr, size_t sz) {
+  std::string str = "AT+SEND=2," + std::to_string(sz) + "," + std::string(b_arr, sz);
+}
 }
 void loop() {
-Serial.println("AT+SEND=2,2,Hi");
-delay(200);
+
 }

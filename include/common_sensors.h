@@ -113,10 +113,13 @@ bool power_on_real_time_clock();
 
 bool power_on_GPS();
 
+bool power_on_Lora();
+
 bool process_temp_and_humidity();
 bool process_barometer();
 bool process_IMUs();
 bool process_magnetometer();
 bool process_real_time_clock();
+
 
 #endif
