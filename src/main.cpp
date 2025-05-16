@@ -4,7 +4,11 @@
 void setup()
 {
   power_on_Lora();
- // initialize_all_sensors(); check
+  if (!initialize_all_sensors())
+  {
+    Serial.println("[CRITICAL] One or more critical sensors failed. Halting...");
+    
+ 
  void transmit_data(char *b_arr, size_t sz) {
   std::string str = "AT+SEND=2," + std::to_string(sz) + "," + std::string(b_arr, sz);
 }
