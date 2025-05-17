@@ -5,6 +5,7 @@
 #include <vector>
 #include <io.h>
 #include <common_sensors.h>
+#include <log.h>
 
 File sd_card;
 SPIFlash flash;
@@ -23,8 +24,10 @@ bool power_on_storage()
 {
   SD.begin(SD_CARD_MODULE_CS_PIN);
 
-  if(!(sd_card = SD.open("sensorData.txt", FILE_WRITE)))
+  if(!(sd_card = SD.open("sensorData.txt", FILE_WRITE))) {
+    debug_log("failed to initialize SD card");
     return false;
+  }
 
   flash.begin();
 
@@ -33,7 +36,11 @@ bool power_on_storage()
   
   if((last_addr = flash.readULong(0, false)) == 0) // readULong internally stores the data as uint32_t
     last_addr = 4;
-  
+
+  #if DEBUG == 1
+  last_addr = 4;
+  #endif
+
   return true;
 }
 
