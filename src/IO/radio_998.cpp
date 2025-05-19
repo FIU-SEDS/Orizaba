@@ -3,7 +3,7 @@
  #include <Arduino.h>
 
 
- void power_on_Lora() 
+  void power_on_lora_998() 
  {
      Serial.begin(115200); //Initializing Serial communication 
     
@@ -17,9 +17,3 @@
      delay(1000);
     Serial.println("Lora Transmitter Ready!");
  }
-
-
-
-
-
-

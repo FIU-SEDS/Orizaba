@@ -25,6 +25,6 @@ enum flight_state : uint8_t
 };
 
 // State manager functions
-bool initialize_all_sensors(); // if one sensor's power on function returns false then it will reset the teensy 4.1
+bool initialize_all_components(); // if one sensor's power on function returns false then it will reset the teensy 4.1
 
 #endif
