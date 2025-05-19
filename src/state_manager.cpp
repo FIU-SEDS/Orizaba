@@ -13,7 +13,7 @@ bool initialize_all_components()
     !power_on_temp_and_humidity() ||
     !power_on_GPS() ||
     !power_on_lora_998() ||
-    !power_on_storage
+    !power_on_storage()
   ) {
     SCB_AIRCR = 0x05FA0004; // should reset teensy4.1
   }
