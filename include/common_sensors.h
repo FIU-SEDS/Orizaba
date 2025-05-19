@@ -57,7 +57,6 @@ enum sensor_readouts : uint8_t // this is to be used as the index for the global
   ALTITUDE,    // barometer in feet
   TEMPERATURE, // temp
   HUMIDITY,    // humid
-  SECONDS,     // real time clock
   HEADING,     // magnetometer
   LATITUDE,    // GPS
   LONGITUDE,
