@@ -1,5 +1,8 @@
 #include <common_sensors.h>
 #include <MCP7940.h> // Real Time Clock Library
+#include <cstdint>
+#include <string>
+#include <arduino.h>
 
 MCP7940_Class real_time_clock; // RTC object. class gives the object access to functions: begin(), deviceStatus(), etc
 
@@ -40,11 +43,24 @@ bool power_on_real_time_clock()//initialize and power on RTC
 }
 
 // total duration in seconds 
-double time_of_stages()
+int get_epoch_seconds()
 {
   DateTime now = real_time_clock.now(); //class and object
 
-  //convert to seconds
-  double Tseconds = now.hour() * 3600.0 + now.minute() * 60.0 + now.second();
+  return now.unixtime();//this function already counts seconds since 01/01/1970
+}
+
+//return type std string
+std::string iteration_time_log() // this is called everytime we iterate the main loop. It logs the time in unix time with milliseconds appended to the end of it.
+{
+  static_assert(sizeof(uint32_t) == 4 && sizeof(uint16_t) == 2, "type is not the expected size.")
+  DateTime now = real_time_clock.now();
+  uint32_t epoch = now.unixtime();
+  uint16_t millis = millis() % 1000;// for minimun space needed.
   
+  std::string time((char*) &epoch, 4);
+  time += std::string((char*) &millis, 2);
+
+  return time; // time is a string where the first 4 bytes describe the epoch time, and the last 2
+  // describe how many milliseconds 
 }
