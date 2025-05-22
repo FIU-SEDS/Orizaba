@@ -2,7 +2,7 @@
 #include <MCP7940.h> // Real Time Clock Library
 #include <cstdint>
 #include <string>
-#include <arduino.h>
+#include <Arduino.h>
 
 MCP7940_Class real_time_clock; // RTC object. class gives the object access to functions: begin(), deviceStatus(), etc
 

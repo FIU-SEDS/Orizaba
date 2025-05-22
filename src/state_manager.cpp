@@ -1,7 +1,7 @@
 #include <state_manager.h>
 #include <common_sensors.h>
 
-rocket_state rocket = INIT; // tentative placement to not get any errors
+rocket_state rocket = IDLE; // tentative placement to not get any errors
 
 bool initialize_all_components()
 {
@@ -31,13 +31,7 @@ void check_states(rocket_state state)
 {
   switch (state)
   {
-  case INIT:
-    initialize_all_components();
-    break;
-
   case IDLE:
-  // prioritize_sensors() overloaded function
-  // checks parameters for rocket state and then switches enum value    
     break;
 
   case BOOST:
@@ -52,9 +46,7 @@ void check_states(rocket_state state)
 
     break;
 
-  case
-
-      default:
+  default:
     break;
   }
 }
