@@ -16,7 +16,7 @@
 #endif
 #define SerialPort Serial
 
-constexpr float GRAVITY_CONSTANT = 9.8;                          // measured in m/s^2
+constexpr float GRAVITY_CONSTANT = 9.80665;                          // measured in m/s^2
 constexpr uint16_t MG_TO_G = 1000;                               // conversion factor for microgravity (mg) to gravity (g)
 constexpr uint8_t INVALID_GRAVITY_THRESHOLD = 30;                // 30Gs max ceiling for sensor if not considered faulty
 constexpr uint8_t INVALID_ROTATIONAL_THRESHOLD = 12;             // reason for 12 rad/s thereshold is only to detect catastrophic tumbling not minor spins
