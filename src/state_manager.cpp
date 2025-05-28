@@ -1,7 +1,12 @@
 #include <state_manager.h>
 #include <common_sensors.h>
 
-rocket_state rocket = IDLE; // tentative placement to not get any errors
+// Rocket State parameter thresholds
+constexpr uint8_t G_FORCE_THRESHOLD = 3;                                                       // unit 1 G
+constexpr float GRAVITY_TO_METERS_PER_SECOND = 9.80665;                                        // measured in m/s^2
+constexpr float LINEAR_ACCEL_Z_THRESHOLD = (G_FORCE_THRESHOLD * GRAVITY_TO_METERS_PER_SECOND); // set to 3Gs; change the G_FORCE_THRESHOLD to set what amount of Gs the rocket will measure until it switches to BOOST
+constexpr uint16_t ALTITUDE_THRESHOLD = 50;                                                    // unit FEET
+rocket_state rocket = IDLE;                                                                    // tentative placement to not get any errors
 
 bool initialize_all_components()
 {
@@ -32,6 +37,12 @@ void check_states(rocket_state state)
   switch (state)
   {
   case IDLE:
+    // prioritize_sensors() in this step will be both Barometer and Accelerometer
+
+    if (global_sensor_vals[LINEAR_ACCELEARTION_Z] > LINEAR_ACCEL_Z_THRESHOLD || global_sensor_vals[ALTITUDE] > ALTITUDE_THRESHOLD)
+    {
+      rocket = BOOST;
+    }
     break;
 
   case BOOST:
