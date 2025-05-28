@@ -32,13 +32,11 @@ bool initialize_all_components()
   return true;
 }
 
-void check_states(rocket_state state)
+void update_rocket_states(rocket_state state)
 {
   switch (state)
   {
   case IDLE:
-    // prioritize_sensors() in this step will be both Barometer and Accelerometer
-
     if (global_sensor_vals[LINEAR_ACCELEARTION_Z] > LINEAR_ACCEL_Z_THRESHOLD || global_sensor_vals[ALTITUDE] > ALTITUDE_THRESHOLD)
     {
       rocket = BOOST;

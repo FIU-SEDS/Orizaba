@@ -27,6 +27,6 @@ enum rocket_state : uint8_t
 // State manager functions
 bool initialize_all_components(); // if one sensor's power on function returns false then it will reset the teensy 4.1
 
-void check_states(rocket_state state); // determines which state the rocket is in and prioritizes said sensor 
+void update_rocket_states(rocket_state state); // determines which state the rocket is in and prioritizes said sensor 
 
 #endif
