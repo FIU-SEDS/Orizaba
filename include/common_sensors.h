@@ -123,12 +123,13 @@ bool power_on_real_time_clock();
 
 bool power_on_GPS();
 
-
+// bool process_gps();
 bool process_temp_and_humidity();
 bool process_barometer();
 bool process_IMUs();
 bool process_magnetometer();
-bool process_real_time_clock();
+//bool process_real_time_clock();
+
 /**
  * @brief Initializes and configures the RYLR998 LoRa Radio Module. 
  * @details Sends AT commands to set the LoRa mode, device address, frequency band(915 MHz), and baud rate. 
