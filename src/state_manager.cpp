@@ -33,7 +33,8 @@ bool initialize_all_components()
     !power_on_storage()
   ) {
     SCB_AIRCR = 0x05FA0004; // should reset teensy 4.1
-  else
+  }
+    else
   {
     rocket = IDLE; // changes rocket state to IDLE from INIT
   }
