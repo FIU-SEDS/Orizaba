@@ -40,8 +40,6 @@ bool run_priority_sensor(enum flight_state rs) {
   static size_t prio_idx = 0;
   static std::vector<bool(*)(void)> &current_prio = idle_prio;
 
-  static bool (*process_sensors[])(void) = {process_temp_and_humidity, process_barometer, process_IMUs, process_magnetometer};
-
   if(rs != old_state) {
     prio_idx = 0;
     switch(rs) {
@@ -77,7 +75,7 @@ bool run_priority_sensor(enum flight_state rs) {
   }
   else {
     current_prio[prio_idx]();
-    if (current_prio.length() < prio_idx) prio_idx++;
+    if (current_prio.size() < prio_idx) prio_idx++;
     else main_idx++;
   }
 

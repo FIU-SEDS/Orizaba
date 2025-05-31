@@ -2,7 +2,7 @@
 #include <Wire.h>
 #include <Arduino.h>
 
-void power_on_lora_998()
+bool power_on_lora_998()
 {
     Serial.begin(115200); // Initializing Serial communication
 
