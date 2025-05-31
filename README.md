@@ -4,6 +4,9 @@ SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
 
 **Microcontroller**: Teensy 4.1
 
+**LIST FOR SENSOR DATA STORAGE/TRANSMISSION** 
+- [Google Sheets Link](https://docs.google.com/spreadsheets/d/15xEbT6rAZYMg4pbxv4v-uwzvX4tvr4YyPcp8unlj1kQ/edit?usp=sharing)
+
 ---
 
 ## Sensors:
