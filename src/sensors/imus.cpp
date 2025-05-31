@@ -308,41 +308,37 @@ bool process_IMUs()
     get_average_acceleration(main_IMU_accelerometer, backup_IMU_accelerometer, avg_accel_x, avg_accel_y, avg_accel_z); // raw acceleartion data averaged out from both IMUs
 
     // Missing getting average linear velocity XYZ
+    // Create serial object and serialize all IMU data
+    serial imu_data;
+    imu_data.serialize_float(avg_accel_x);
+    imu_data.serialize_float(avg_accel_y);
+    imu_data.serialize_float(avg_accel_z);
+    imu_data.serialize_float(avg_gyro_x);
+    imu_data.serialize_float(avg_gyro_y);
+    imu_data.serialize_float(avg_gyro_z);
+    imu_data.serialize_float(total_g_force);
+    imu_data.serialize_float(tilt_angle);
+    imu_data.serialize_float(z_axis_g_force);
+    imu_data.serialize_float(linear_accel_x);
+    imu_data.serialize_float(linear_accel_y);
+    imu_data.serialize_float(linear_accel_z);
+    // Add linear velocity when you implement it
 
-    // use as reference
-    // create serial object
-    // serialize data into it
-    // call write_transmit
-    write_and_transmit(IMUS, avg_accel_x);
-    write_and_transmit(IMUS, avg_accel_y);
-    write_and_transmit(IMUS, avg_accel_z);
-    write_and_transmit(IMUS, avg_gyro_x);
-    write_and_transmit(IMUS, avg_gyro_y);
-    write_and_transmit(IMUS, avg_gyro_z);
-    write_and_transmit(IMUS, tilt_angle);
-    write_and_transmit(IMUS, z_axis_g_force);
-    write_and_transmit(IMUS, total_g_force);
-    write_and_transmit(IMUS, linear_accel_x);
-    write_and_transmit(IMUS, linear_accel_y);
-    write_and_transmit(IMUS, linear_accel_z);
+    // Single call to write and transmit all IMU data
+    write_and_transmit(IMUS, imu_data);
 
-    // missing linear velocity
-
+    // Update global sensor values
     global_sensor_vals[AVERAGE_ACCELERATION_X] = avg_accel_x;
     global_sensor_vals[AVERAGE_ACCELERATION_Y] = avg_accel_y;
     global_sensor_vals[AVERAGE_ACCELERATION_Z] = avg_accel_z;
-
     global_sensor_vals[ANGULAR_VELOCITY_X] = avg_gyro_x;
     global_sensor_vals[ANGULAR_VELOCITY_Y] = avg_gyro_y;
     global_sensor_vals[ANGULAR_VELOCITY_Z] = avg_gyro_z;
-
     global_sensor_vals[TILT_ANGLE] = tilt_angle;
     global_sensor_vals[Z_AXIS_G_FORCE] = z_axis_g_force;
     global_sensor_vals[TOTAL_G_FORCE] = total_g_force;
-
     global_sensor_vals[LINEAR_ACCELERATION_X] = linear_accel_x;
     global_sensor_vals[LINEAR_ACCELERATION_Y] = linear_accel_y;
     global_sensor_vals[LINEAR_ACCELEARTION_Z] = linear_accel_z;
-
     return true;
 }
