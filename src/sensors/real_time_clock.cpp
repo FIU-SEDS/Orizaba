@@ -53,13 +53,13 @@ int get_epoch_seconds()
 //return type std string
 std::string iteration_time_log() // this is called everytime we iterate the main loop. It logs the time in unix time with milliseconds appended to the end of it.
 {
-  static_assert(sizeof(uint32_t) == 4 && sizeof(uint16_t) == 2, "type is not the expected size.")
+  static_assert(sizeof(uint32_t) == 4 && sizeof(uint16_t) == 2, "type is not the expected size.");
   DateTime now = real_time_clock.now();
   uint32_t epoch = now.unixtime();
-  uint16_t millis = millis() % 1000;// for minimun space needed.
+  uint16_t mili = millis() % 1000;// for minimun space needed.
   
   std::string time((char*) &epoch, 4);
-  time += std::string((char*) &millis, 2);
+  time += std::string((char*) &mili, 2);
 
   return time; // time is a string where the first 4 bytes describe the epoch time, and the last 2
   // describe how many milliseconds 
