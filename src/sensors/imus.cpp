@@ -27,6 +27,9 @@ constexpr uint8_t AXIS_SIZE = 3;
 Adafruit_BNO055 main_IMU = Adafruit_BNO055(55, 0x28);      // main IMU BNO055 object
 ASM330LHHSensor backup_IMU(&DEV_I2C, ASM330LHH_I2C_ADD_L); // backup IMU ASM330LHH object
 
+// function to get seconds in epoch time from real time clock file
+extern int get_epoch_seconds();
+
 bool verify_main_IMU_temperature(int8_t main_IMU_temp_reading)
 {
     if (main_IMU_temp_reading < COMMON_LOWER_TEMP || main_IMU_temp_reading > MAGNETOMETER_UPPER_TEMP)
@@ -237,6 +240,38 @@ void get_average_acceleration(sensors_event_t main_IMU_accelerometer, int32_t ba
     }
 }
 
+void get_linear_velocity(float linear_accel_x, float linear_accel_y, float linear_accel_z, float &linear_velocity_x, float &linear_velocity_y, float &linear_velocity_z)
+{
+    static float prev_velocity_x = 0.0, prev_velocity_y = 0.0, prev_velocity_z = 0.0;
+    static int previous_time = 0;
+    static bool first_iteration = true;
+
+    // get current time
+    int current_time = get_epoch_seconds();
+
+    // calculate linear velocity using Vx = Vox + at
+    if (!first_iteration)
+    {
+        float delta_time = static_cast<float>(current_time - previous_time); // dt in seconds
+
+        // applying kinematics equation for each axis: Vx = Vox + a*t
+        linear_velocity_x = prev_velocity_x + (linear_accel_x * delta_time);
+        linear_velocity_y = prev_velocity_y + (linear_accel_y * delta_time);
+        linear_velocity_z = prev_velocity_z + (linear_accel_z * delta_time);
+
+        // update previous velocities
+        prev_velocity_x = linear_velocity_x;
+        prev_velocity_y = linear_velocity_y;
+        prev_velocity_z = linear_velocity_z;
+    }
+    else
+    {
+        // first iteration initializes the velocities to 0
+        linear_velocity_x = linear_velocity_y = linear_velocity_z = 0.0;
+        first_iteration = false;
+    }
+}
+
 bool power_on_main_IMU()
 {
     if (main_IMU.begin() == false)
@@ -283,8 +318,8 @@ bool power_on_backup_IMU()
 
 bool process_IMUs()
 {
-    sensors_event_t angular_velocity, linear_accleration, main_IMU_accelerometer, gravity; // typedef datatype for main IMU
-    float avg_gyro_x, avg_gyro_y, avg_gyro_z, avg_accel_x, avg_accel_y, avg_accel_z;       // raw data values gyro saved in rad/s and accelerometer saved in m/s^2
+    sensors_event_t angular_velocity, linear_accleration, main_IMU_accelerometer, gravity;                                                    // typedef datatype for main IMU
+    float avg_gyro_x, avg_gyro_y, avg_gyro_z, avg_accel_x, avg_accel_y, avg_accel_z, linear_velocity_x, linear_velocity_y, linear_velocity_z; // raw data values gyro saved in rad/s, accelerometer saved in m/s^2, and velocity saved in m/s
 
     // Arrays to hold backup IMU readings
     int32_t backup_IMU_accelerometer[AXIS_SIZE] = {}; // For current acceleration reading (x, y, z)
@@ -307,7 +342,8 @@ bool process_IMUs()
     get_average_angular_velocity(angular_velocity, backup_IMU_gyroscope, avg_gyro_x, avg_gyro_y, avg_gyro_z);          // raw angular velocity data averaged out from both IMUs
     get_average_acceleration(main_IMU_accelerometer, backup_IMU_accelerometer, avg_accel_x, avg_accel_y, avg_accel_z); // raw acceleartion data averaged out from both IMUs
 
-    // Missing getting average linear velocity XYZ
+    get_linear_velocity(linear_accel_x, linear_accel_y, linear_accel_z, linear_velocity_x, linear_velocity_y, linear_velocity_z); // returns linear velocity in xyz axis
+
     // Create serial object and serialize all IMU data
     serial imu_data;
     imu_data.serialize_float(avg_accel_x);
@@ -322,7 +358,9 @@ bool process_IMUs()
     imu_data.serialize_float(linear_accel_x);
     imu_data.serialize_float(linear_accel_y);
     imu_data.serialize_float(linear_accel_z);
-    // Add linear velocity when you implement it
+    imu_data.serialize_float(linear_velocity_x);
+    imu_data.serialize_float(linear_velocity_y);
+    imu_data.serialize_float(linear_velocity_z);
 
     // Single call to write and transmit all IMU data
     write_and_transmit(IMUS, imu_data);
@@ -334,11 +372,15 @@ bool process_IMUs()
     global_sensor_vals[ANGULAR_VELOCITY_X] = avg_gyro_x;
     global_sensor_vals[ANGULAR_VELOCITY_Y] = avg_gyro_y;
     global_sensor_vals[ANGULAR_VELOCITY_Z] = avg_gyro_z;
+    global_sensor_vals[TOTAL_G_FORCE] = total_g_force;
     global_sensor_vals[TILT_ANGLE] = tilt_angle;
     global_sensor_vals[Z_AXIS_G_FORCE] = z_axis_g_force;
-    global_sensor_vals[TOTAL_G_FORCE] = total_g_force;
     global_sensor_vals[LINEAR_ACCELERATION_X] = linear_accel_x;
     global_sensor_vals[LINEAR_ACCELERATION_Y] = linear_accel_y;
     global_sensor_vals[LINEAR_ACCELEARTION_Z] = linear_accel_z;
+    global_sensor_vals[LINEAR_VELOCITY_X] = linear_velocity_x;
+    global_sensor_vals[LINEAR_VELOCITY_Y] = linear_velocity_y;
+    global_sensor_vals[LINEAR_VELOCITY_Z] = linear_velocity_z;
+
     return true;
 }
