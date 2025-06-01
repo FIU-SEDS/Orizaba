@@ -11,5 +11,6 @@ struct serial {
 bool store_data(unsigned char *arr, size_t sz);
 bool write_and_transmit(enum sensors SID, float x);
 void transmit_data(char *b_arr, size_t sz);
+void log_current_time();
 
 #endif // IO_H

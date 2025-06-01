@@ -24,7 +24,8 @@ constexpr uint8_t MAGNETOMETER_UPPER_TEMP = 105;  // degress Celsius
 constexpr uint8_t COMMON_UPPER_TEMP = 85;         // degress Celsius (multiple sensors share this higher tempearture operating range)
 constexpr uint8_t TEMP_HUMIDITY_UPPER_TEMP = 125; // degress Celsius
 
-enum sensors : uint8_t // this is to be used as the PACKET IDs when sending data over radio!
+enum sensors : uint8_t // this is to be used as the header IDs when sending data over the radio and writing to the SD/flash memory! 
+// Every ID here represents a unique number you first read to know how the following data should be interpreted.
 {
   BAROMETER,
   IMUS,
@@ -33,7 +34,7 @@ enum sensors : uint8_t // this is to be used as the PACKET IDs when sending data
   TEMP,
   HUMID,
   GPS,
-  SENSORS_AMOUNT
+  TIME,
 };
 
 enum sensor_readouts : uint8_t // this is to be used as the index for the global array!

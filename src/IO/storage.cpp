@@ -46,7 +46,7 @@ bool power_on_storage()
   return true;
 }
 
-bool store_data(unsigned char *arr, std::size_t sz)
+bool store_data(unsigned char *arr, size_t sz)
 {
   sd_card.write(arr, sz);
   flash.writeByteArray(last_addr, arr, sz, false);
