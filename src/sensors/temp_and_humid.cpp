@@ -36,19 +36,16 @@ bool power_on_temp_and_humidity()
   return true;
 }
 
-bool process_humidity()
+bool process_temp_and_humidity()
 {
-  float humidity = temp_hud.readHumidity();
-  global_sensor_vals[HUMID] = humidity;
-  write_and_transmit(HUMID, humidity);
   
-  return true;
-}
-
-bool process_temp()
-{
+  float humidity = temp_hud.readHumidity();
   float temperature = temp_hud.readTemperature();
+
+  global_sensor_vals[HUMID] = humidity;
   global_sensor_vals[TEMPERATURE] = temperature;
+
+  write_and_transmit(HUMID, humidity);
   write_and_transmit(TEMP, temperature);
 
   return true;
