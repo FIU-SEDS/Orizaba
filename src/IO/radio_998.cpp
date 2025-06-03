@@ -25,19 +25,19 @@ bool power_on_lora_998()
   delay(2000);
   
   // Configure LoRa module
-  Serial.print("AT\r\n");
-  delay(500);
-  Serial.print("AT+ADDRESS=1\r\n");
-  delay(500);
-  Serial.print("AT+NETWORKID=8\r\n");
-  delay(500);
-  Serial.print("AT+BAND=915000000\r\n");
+  Serial.println("AT");
+  delay(1000);
+  Serial.println("AT+ADDRESS=1");
+  delay(1000);
+  Serial.println("AT+NETWORKID=2");
+  delay(1000);
+  Serial.println("AT+BAND=915000000");
   delay(1000);
   Serial.println("Setup Complete!");
 }
 
 void loop() {
-  Serial.print("AT+SEND=2,5,Hello\r\n");
+  Serial.print("AT+SEND=2,5,Hello");
   delay(2000);
 }
   */
