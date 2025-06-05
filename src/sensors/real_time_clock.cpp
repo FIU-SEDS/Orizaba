@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <Arduino.h>
+#include <io.h>
 
 MCP7940_Class real_time_clock; // RTC object. class gives the object access to functions: begin(), deviceStatus(), etc
 
@@ -64,3 +65,11 @@ std::string iteration_time_log() // this is called everytime we iterate the main
   return time; // time is a string where the first 4 bytes describe the epoch time, and the last 2
   // describe how many milliseconds 
 }
+
+void log_current_time()
+{
+  auto s = iteration_time_log();
+  s.insert(0, 1, TIME);
+  store_data((unsigned char*) s.data(), s.length());
+}
+
