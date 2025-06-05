@@ -19,6 +19,7 @@ bool verify_barometer_temperature(float barometer_temp_reading)
   return true;
 }
 
+// returns altitude from barometer in FEET
 float read_altitude(float sea_level_pressure)
 {
   float altitude;

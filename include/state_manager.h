@@ -11,7 +11,7 @@ enum axes : uint8_t
 };
 
 // Flight states
-enum flight_state : uint8_t
+enum rocket_state : uint8_t
 {
   INIT,
   IDLE,
@@ -26,5 +26,7 @@ enum flight_state : uint8_t
 
 // State manager functions
 bool initialize_all_components(); // if one sensor's power on function returns false then it will reset the teensy 4.1
+
+void update_rocket_states(rocket_state state); // determines which state the rocket is in and prioritizes said sensor 
 
 #endif

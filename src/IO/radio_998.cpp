@@ -19,3 +19,26 @@ bool power_on_lora_998()
     return true;
     //possibly switch to bool func, need to create error check 
 }
+
+/*void setup() {
+  Serial.begin(115200);
+  delay(2000);
+  
+  // Configure LoRa module
+  Serial.println("AT");
+  delay(1000);
+  Serial.println("AT+ADDRESS=1");
+  delay(1000);
+  Serial.println("AT+NETWORKID=2");
+  delay(1000);
+  Serial.println("AT+BAND=915000000");
+  delay(1000);
+  Serial.println("Setup Complete!");
+}
+
+void loop() {
+  Serial.print("AT+SEND=2,5,Hello");
+  delay(2000);
+}
+  */
+ 
