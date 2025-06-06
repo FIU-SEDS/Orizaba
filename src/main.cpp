@@ -44,10 +44,10 @@ void loop()
   String base64_data = String((char *)base64_output);
   base64_data = base64_data.substring(0, encoded_length);
 
-  Serial.print("Regular float: ");
+  // Serial.print("Regular float: ");
   // Serial.println(altitude_test_value);
 
-  Serial.print("Base-64 encoded: ");
+  // Serial.print("Base-64 encoded: ");
   // Serial.println(base64_data);
 
   transmit_data((char *)base64_data.c_str(), base64_data.length()); // c_str() allows std::string objects to be a C-styled string to match with function arguement
