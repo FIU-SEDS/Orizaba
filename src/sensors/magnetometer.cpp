@@ -87,7 +87,7 @@ double get_heading() // function for direction in degrees
   return Degrees;
 }
 
-bool process_magnemeter() {
+bool process_magnetometer() {
   double heading = get_heading();
   write_and_transmit(MAGNETOMETER, heading);
   global_sensor_vals[HEADING] = heading;
