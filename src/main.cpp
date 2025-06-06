@@ -1,7 +1,7 @@
-#include <state_manager.h>
 #include <common_sensors.h>
 #include <io.h>
 #include <base64.hpp>
+#include <Arduino.h>
 
 void setup()
 {

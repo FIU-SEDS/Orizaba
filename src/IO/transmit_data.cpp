@@ -1,7 +1,11 @@
 #include <io.h>
-#include <string>
+#include <Arduino.h>
 
 void transmit_data(char *b_arr, size_t sz)
 {
-  std::string str = "AT+SEND=2," + std::to_string(sz) + "," + std::string(b_arr, sz);
+  Serial.print("AT+SEND=2,");
+  Serial.print(sz);
+  Serial.print(",");
+  Serial.write((uint8_t*)b_arr, sz);
+  Serial.println();
 }

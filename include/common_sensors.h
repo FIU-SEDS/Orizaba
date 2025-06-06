@@ -1,6 +1,6 @@
 #ifndef COMMON_SENSORS_H
 #define COMMON_SENSORS_H
-#include <cstdint>
+#include <stdint.h>
 #include <Wire.h>
 
 // Pin address and locations
