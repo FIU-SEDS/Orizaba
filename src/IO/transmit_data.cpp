@@ -3,9 +3,9 @@
 
 void transmit_data(char *b_arr, size_t sz)
 {
-  Serial.print("AT+SEND=2,");
-  Serial.print(sz);
-  Serial.print(",");
-  Serial.write((uint8_t*)b_arr, sz);
-  Serial.println();
+
+  String data_string = "AT+SEND=2," + String(sz) + "," + String(b_arr);
+ 
+
+  Serial.println(data_string);
 }
