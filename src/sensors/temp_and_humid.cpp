@@ -42,11 +42,14 @@ bool process_temp_and_humidity()
   float humidity = temp_hud.readHumidity();
   float temperature = temp_hud.readTemperature();
 
-  global_sensor_vals[HUMID] = humidity;
+  global_sensor_vals[HUMIDITY] = humidity;
   global_sensor_vals[TEMPERATURE] = temperature;
 
-  write_and_transmit(HUMID, humidity);
-  write_and_transmit(TEMP, temperature);
+  serial s;
+  s.serialize_float(humidity);
+  s.serialize_float(temperature);
+
+  write_and_transmit(TEMP_HUMID, s);
 
   return true;
 }
