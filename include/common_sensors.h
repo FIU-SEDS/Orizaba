@@ -30,7 +30,7 @@ enum sensors : uint8_t // this is to be used as the header IDs when sending data
   BAROMETER,
   IMUS,
   MAGNETOMETER,
-  REAL_TIME_CLOCK,
+  // REAL_TIME_CLOCK,
   TEMP_HUMID,
   //HUMID,
   GPS,
