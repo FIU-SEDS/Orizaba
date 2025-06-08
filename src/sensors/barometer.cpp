@@ -61,8 +61,12 @@ bool process_barometer()
   double altitude = read_altitude(SEA_LEVEL_PRESSURE);
   float pressure = (barometer.getPressurePascal()) / 100.0F; // pascals converted to hectopascals
 
-  write_and_transmit(BAROMETER, pressure);
-  write_and_transmit(BAROMETER, altitude) ;
+  serial barometer_data;
+
+  barometer_data.serialize_float(altitude);
+  barometer_data.serialize_float(pressure);
+
+  write_and_transmit(BAROMETER, barometer_data);
 
   global_sensor_vals[ALTITUDE] = altitude;
   global_sensor_vals[PRESSURE] = pressure;
