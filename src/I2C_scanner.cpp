@@ -6,7 +6,7 @@
 void setup()
 {
   Wire.begin();       // Join I2C bus
-  Serial.begin(9600); // Start serial communication
+  Serial.begin(115200); // Start serial communication
   while (!Serial)
     ; // Wait for serial monitor
   Serial.println("\nI2C Scanner");
