@@ -2,6 +2,7 @@
 #include <common_sensors.h>
 #include <vector>
 #include <cstdint>
+#include <io.h>
 
 #define ARRLEN(_x) ((sizeof(_x)) / (sizeof(_x[0])))
 
@@ -18,6 +19,8 @@ constexpr uint16_t MAIN_PARACHUTE_THRESHOLD = 1000;                             
 double previous_altitude = 0;    // this variable is set to keep track of a previous baseline altitude to refer to
 uint8_t coast_sample_count = 0;  // used to verify that the coast counter reaches 100 to switch states
 uint8_t apogee_sample_count = 0; // used to verify that the current altitude measurement in COAST stage is lower than the previous reading and repeated 5 times to ensure that the rocket is in apogee
+
+void log_state_change();
 
 bool initialize_all_components()
 {
@@ -47,8 +50,8 @@ static std::vector<bool (*)(void)> boost_prio = {process_barometer, process_IMUs
 static std::vector<bool (*)(void)> burnout_prio = {process_IMUs};
 static std::vector<bool (*)(void)> coast_prio = {process_barometer, process_IMUs};
 static std::vector<bool (*)(void)> apogee_prio = {process_barometer};
-static std::vector<bool (*)(void)> descent_prio = {process_barometer, process_IMUs}; // process_GPS here
-static std::vector<bool (*)(void)> landed_prio = {};                                 // process_GPS here
+static std::vector<bool (*)(void)> descent_prio = {process_barometer, process_IMUs};
+static std::vector<bool (*)(void)> landed_prio = {process_barometer, process_IMUs};
 static bool (*process_sensors[])(void) = {process_temp_and_humidity, process_barometer, process_IMUs, process_magnetometer};
 
 bool run_priority_sensor(rocket_state rs)
@@ -60,6 +63,7 @@ bool run_priority_sensor(rocket_state rs)
 
   if (rs != old_state)
   {
+    log_state_change();
     prio_idx = 0;
     switch (rs)
     {
@@ -181,4 +185,10 @@ void update_rocket_states(rocket_state state)
     break;
   }
   previous_altitude = global_sensor_vals[ALTITUDE]; // updates previous altitude for the next iteration
+}
+
+void log_state_change()
+{
+  char b_arr[] = {ROCKET_STATE, (char) rocket};
+  transmit_data(b_arr, 2);
 }
