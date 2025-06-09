@@ -31,7 +31,7 @@ bool initialize_all_components()
       !power_on_magnetometer() ||
       !power_on_barometer() ||
       !power_on_temp_and_humidity() ||
-      //!power_on_GPS() ||
+      // !power_on_GPS() ||
       !power_on_lora_998() ||
       !power_on_storage())
   {
