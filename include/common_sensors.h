@@ -30,11 +30,9 @@ enum sensors : uint8_t // this is to be used as the header IDs when sending data
   BAROMETER,
   IMUS,
   MAGNETOMETER,
-  // REAL_TIME_CLOCK,
   TEMP_HUMID,
-  //HUMID,
-  GPS,
   TIME,
+  ROCKET_STATE
 };
 
 enum sensor_readouts : uint8_t // this is to be used as the index for the global array!
@@ -122,7 +120,7 @@ bool power_on_main_IMU();
  * */
 bool power_on_real_time_clock();
 
-bool power_on_GPS();
+//bool power_on_GPS();
 
 // bool process_gps();
 bool process_temp_and_humidity();
