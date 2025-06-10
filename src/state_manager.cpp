@@ -192,4 +192,5 @@ void log_state_change()
 {
   char b_arr[] = {ROCKET_STATE, (char) rocket};
   transmit_data(b_arr, 2);
+  store_data((unsigned char*) b_arr, 2);
 }
