@@ -15,11 +15,11 @@ bool write_and_transmit(enum sensors SID, serial &s) {
   
   store_data(&s.ser[0], s.ser.size());
   if(SID == IMUS) { // WE DO NOT WANT TO SEND ALL THE IMU'S DATA OVER RADIO! WE ONLY WANT TO SEND SOME OF THE DATA
-    transmit_data(&s.ser[7 * sizeof(float)], 
+    transmit_data((char*)&s.ser[7 * sizeof(float)], 
                   8 * sizeof(float));
     return true;
   }
-  transmit_data(&s.ser[0], s.ser.size());
+  transmit_data((char*) &s.ser[0], s.ser.size());
 
   return true;
 }
