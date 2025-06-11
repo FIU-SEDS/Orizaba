@@ -7,8 +7,7 @@
 #include <state_manager.h>
 #include <io.h>
 
-
-MS5611 barometer; // Barometer MS5611 object
+MS5611 barometer(BAROMETER_ADDRESS, &Wire2); // Barometer MS5611 object
 
 /// Atlitude calculations constants
 constexpr uint32_t ATMOSPHERE_HEIGHT_METERS = 44330; // Height where pressure approaches zero
@@ -47,11 +46,11 @@ bool power_on_barometer()
     return false;
   }
 
-  if (!is_device_connected(BAROMETER_ADDRESS))
-  {
-    Serial.println("Barometer I2C check failed.");
-    return false;
-  }
+  // if (!is_device_connected(BAROMETER_ADDRESS))
+  // {
+  //   Serial.println("Barometer I2C check failed.");
+  //   return false;
+  // }
 
   if (!verify_barometer_temperature(barometer.getTemperature()))
   {
@@ -61,6 +60,7 @@ bool power_on_barometer()
 
   return true;
 }
+
 void setup()
 {
   Serial1.begin(115200);
@@ -75,11 +75,14 @@ void setup()
 void loop()
 {
   double altitude = read_altitude(SEA_LEVEL_PRESSURE);
-  float pressure = (barometer.getPressurePascal()) / 100.0F; // pascals converted to hectopascals
+  float pressure = (barometer.getPressurePascal() / 100.0F); // pascals converted to hectopascals
 
+  barometer.read();
   Serial.print("Altitude: ");
   Serial.println(altitude);
 
   Serial.print("Pressure (hPA): ");
   Serial.println(pressure);
+
+  delay(300);
 }
