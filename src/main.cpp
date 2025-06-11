@@ -32,7 +32,8 @@ float read_altitude(float sea_level_pressure)
   float pressure = (barometer.getPressurePascal()) / 100.0F; // conversion from pacals to hectopascals
 
   altitude = ATMOSPHERE_HEIGHT_METERS * (1.0F - pow(pressure / SEA_LEVEL_PRESSURE, PRESSURE_EXPONENT)); // formula for altitude
-  altitude *= METERS_TO_FEET;                                                                           // converts from meters to feet
+
+  altitude *= METERS_TO_FEET; // converts from meters to feet
 
   return altitude;
 }
@@ -66,7 +67,7 @@ void setup()
   Serial1.begin(115200);
   Wire2.begin();
   // initialize_all_components();
-  if(!power_on_barometer())
+  if (!power_on_barometer())
   {
     Serial.println("INIT failed");
   }
@@ -74,10 +75,10 @@ void setup()
 
 void loop()
 {
-  double altitude = read_altitude(SEA_LEVEL_PRESSURE);
-  float pressure = (barometer.getPressurePascal() / 100.0F); // pascals converted to hectopascals
-
   barometer.read();
+  float pressure = (barometer.getPressurePascal() / 100.0F); // pascals converted to hectopascals
+  double altitude = read_altitude(SEA_LEVEL_PRESSURE);
+
   Serial.print("Altitude: ");
   Serial.println(altitude);
 
