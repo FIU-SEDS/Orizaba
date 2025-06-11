@@ -5,6 +5,7 @@
 bool power_on_lora_998()
 {
     Serial1.begin(115200); // Initializing Serial communication
+    Wire2.begin();
 
     Serial1.println("AT+MODE=0");
     delay(1000);
