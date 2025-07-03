@@ -27,7 +27,7 @@ bool verify_barometer_temperature(float barometer_temp_reading)
 // returns altitude from barometer in FEET
 float read_altitude(float sea_level_pressure)
 {
-  float altitude;
+  float altitude = 0.0;
 
   float pressure = (barometer.getPressurePascal()) / 100.0F; // conversion from pacals to hectopascals
 
