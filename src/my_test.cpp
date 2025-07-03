@@ -16,7 +16,7 @@ bool verify_magnetometer_temperature(int16_t mag_temp_reading)
 
 bool power_on_magnetometer()
 {
-  if (magnetometer.begin() == false)
+  if (magnetometer.begin(Wire2) == false)
   {
     Serial.print("Magnetometer BEGIN function failed."); // print this
     return false;

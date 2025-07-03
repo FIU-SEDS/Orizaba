@@ -27,9 +27,9 @@ void setup()
   Serial.begin(115200);
   Serial.println("MMC5983MA Example");
 
-  Wire.begin();
+  Wire2.begin();
 
-  if (myMag.begin() == false)
+  if (myMag.begin(Wire2) == false)
   {
     Serial.println("MMC5983MA did not respond - check your wiring. Freezing.");
     while (true)
