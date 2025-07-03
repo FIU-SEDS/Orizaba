@@ -96,3 +96,23 @@ bool process_magnetometer()
   return true;
 }
 
+void setup()
+{
+  Serial.begin(115200);
+  Wire2.begin();
+
+  if (power_on_magnetometer() == false)
+  {
+    Serial.println("Magnetometer startup function failed");
+  }
+  else
+  { 
+    Serial.println("Magnetometer good to go!");
+  }
+}
+
+void loop()
+{
+  process_magnetometer();
+  delay(500);
+}
