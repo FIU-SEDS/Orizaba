@@ -25,7 +25,7 @@ void loop()
   // Serial1.println("AT+SEND=2,12,AGaWvkTA5sVH");
   // digitalWrite(BUILTIN_LED, HIGH);
   // delay(500);
-  Serial1.println("AT+SEND=0,5,HELLO"); // add explicit crlf
+  Serial1.println("AT+SEND=0,19,MR.WORLDWIDEDALEEEE"); // add explicit crlf
   delay(500);
   // digitalWrite(BUILTIN_LED, LOW);
   // Serial1.println("AT+SEND=2,8,AmZmq0M=");
