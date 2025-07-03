@@ -12,4 +12,5 @@ void transmit_data(char *b_arr, size_t sz)
 {
   auto encoded = to_base64(b_arr, sz);
   std::string str = "AT+SEND=2," + std::to_string(encoded.length()) + "," + encoded;
+  Serial1.println(str.c_str());
 }

@@ -50,8 +50,9 @@ static std::vector<bool (*)(void)> boost_prio = {process_barometer, process_IMUs
 static std::vector<bool (*)(void)> burnout_prio = {process_IMUs};
 static std::vector<bool (*)(void)> coast_prio = {process_barometer, process_IMUs};
 static std::vector<bool (*)(void)> apogee_prio = {process_barometer};
-static std::vector<bool (*)(void)> descent_prio = {process_barometer, process_IMUs};
-static std::vector<bool (*)(void)> landed_prio = {process_barometer, process_IMUs};
+static std::vector<bool (*)(void)> descent_prio = {process_barometer, process_IMUs}; // process_GPS here
+static std::vector<bool (*)(void)> landed_prio = {process_barometer, process_IMUs};                                 // process_GPS here
+
 static bool (*process_sensors[])(void) = {process_temp_and_humidity, process_barometer, process_IMUs, process_magnetometer};
 
 bool run_priority_sensor(rocket_state rs)
@@ -98,8 +99,8 @@ bool run_priority_sensor(rocket_state rs)
     }
     else
     {
-      current_prio[prio_idx]();
-      if (current_prio.size() < prio_idx)
+      current_prio[prio_idx % current_prio.size()]();
+      if (current_prio.size() > prio_idx)
         prio_idx++;
       else
         main_idx++;
@@ -191,4 +192,5 @@ void log_state_change()
 {
   char b_arr[] = {ROCKET_STATE, (char) rocket};
   transmit_data(b_arr, 2);
+  store_data((unsigned char*) b_arr, 2);
 }
