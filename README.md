@@ -12,6 +12,12 @@ SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
   <img src="assets/orizaba-bottom.png" alt="Image 2" width="45%" />
 </p>
 
+## Result
+<p align="center">
+  <img src="assets/orizaba-top-soldered.png" alt="Image 1" width="45%" />
+  <img src="assets/orizaba-bottom-soldered.png" alt="Image 2" width="45%" />
+</p>
+
 
 ---
 
