@@ -1,13 +1,23 @@
 # ORIZABA FLIGHT COMPUTER CODE
 
 SEDS Avionics Team Full-Scale Flight Computer 2024-2025 Season
+**Competiton Link for team placement:** [IREC 2025](https://www.soundingrocket.org/2025-irec.html)
+- 10K COTS: 56th place out of 81 teams
+- Overall: 86th place out of 142 teams
+
+## Design
+
+<p align="center">
+  <img src="/assets/orizaba-top.png.png" alt="Image 1" width="45%" />
+  <img src="/assets/orizaba-bottom.png.png" alt="Image 2" width="45%" />
+</p>
+
+---
 
 **Microcontroller**: Teensy 4.1
 
 **LIST FOR SENSOR DATA STORAGE/TRANSMISSION** 
 - [Google Sheets Link](https://docs.google.com/spreadsheets/d/15xEbT6rAZYMg4pbxv4v-uwzvX4tvr4YyPcp8unlj1kQ/edit?usp=sharing)
-
----
 
 ## Sensors:
 
